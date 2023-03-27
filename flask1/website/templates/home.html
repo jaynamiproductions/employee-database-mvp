@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% block content %}
+<h4>Employee Summary</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for prof in user.profile_info %}
+    <li class="list-group-item">
+        <div><label><b>First Name: </b></label> {{prof.fname}}</div>
+        <div><label><b>Last Name: </b></label> {{prof.lname}}</div>
+        <div><label><b>Position: </b></label> {{prof.position}}</div>
+        <button type="button" class="close" onClick="deleteProfile({{ prof.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Employee Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="fname">First Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="fname"
+            name="fname"
+            placeholder="Enter first name"
+        />
+    </div>
+
+    <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="lname"
+            name="lname"
+            placeholder="Enter last name"
+        />
+    </div>
+
+    <div class="form-group">
+        <label for="position">Position</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="position"
+            name="position"
+            placeholder="Enter position title"
+        />
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}
