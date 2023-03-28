@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block title %}Certificates{% endblock %}
+{% block content %}
+<h4>Employee Certificates/Degrees/Diplomas/Licenses</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for certi in user.cert_info %}
+    <li class="list-group-item">
+        <div><label><b>ACLS Certificate/Card: </b></label> {{certi.acls_cert}}</div>
+        <div><label><b>Annual Trophon Certificate: </b></label> {{certi.annual_trophon}}</div>
+        <button type="button" class="close" onClick="deleteProfile({{ certi.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Certificate Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="acls">ACLS Certificate/Card</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="acls"
+            name="acls"
+            placeholder="Enter ACLS Certificate/Card"
+        />
+    </div>
+
+    <div class="form-group">
+        <label for="trophon">Annual Trophon Certificate</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="trophon"
+            name="trophon"
+            placeholder="Enter Annual Trophon Certificate"
+        />
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

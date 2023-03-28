@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template as rt, request, flash, jsonify, send_file
 from flask_login import login_required,current_user
-from .models import Profile
+from .models import Profile, Cert
 from . import db
 import json
 from io import BytesIO
@@ -32,6 +32,44 @@ def home():
             flash('Information saved in database.',category='Success')
 
     return rt('home.html',user=current_user,name=request.form.get('fname'))
+
+
+@views.route('/demographics',methods=['GET','POST'])
+@login_required
+def demo():
+    if request.method == 'POST':
+        fname = request.form.get('fname')
+        lname = request.form.get('lname')
+        position = request.form.get('position')
+
+        file = request.files['file']
+
+        if len(fname) < 1:
+            flash('Please enter a valid first name',category='Error')
+        elif len(lname) < 1:
+            flash('Please enter a valid last name',category='Error')
+        elif len(position) < 1:
+            flash('Please enter a valid position',category='Error')
+        else:
+            full_profile = Profile(fname=fname,lname=lname,position=position,filename=file.filename,filedata=file.read(),user_id=current_user.id)
+            db.session.add(full_profile)
+            db.session.commit()
+
+            flash('Information saved in database.',category='Success')
+
+    return rt('demo.html',user=current_user,name=request.form.get('fname'))
+
+@views.route('/certificates',methods=['GET','POST'])
+@login_required
+def cert():
+    if request.method == 'POST':
+        acls = request.form.get('acls')
+        trophon = request.form.get('trophon')
+        full_cert = Cert(acls_cert=acls,annual_trophon=trophon,user_id=current_user.id)
+
+        db.session.add(full_cert)
+        db.session.commit()
+    return rt('certs.html',user=current_user,name=request.form.get('fname'))
 
 @views.route('/download/<upload_id>')
 def download(upload_id):

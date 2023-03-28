@@ -11,6 +11,11 @@ class Profile(db.Model):
     filedata = db.Column(db.LargeBinary)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+class Cert(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    acls_cert = db.Column(db.Integer)
+    annual_trophon = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer,primary_key=True)
@@ -18,3 +23,4 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     firstname = db.Column(db.String(150))
     profile_info = db.relationship('Profile')
+    cert_info = db.relationship('Cert')
