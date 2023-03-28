@@ -8,16 +8,18 @@
         <div><label><b>First Name: </b></label> {{prof.fname}}</div>
         <div><label><b>Last Name: </b></label> {{prof.lname}}</div>
         <div><label><b>Position: </b></label> {{prof.position}}</div>
+        <div><label><b>PDF: </b></label> {{prof.filename}}</div>
         <button type="button" class="close" onClick="deleteProfile({{ prof.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
         </button>
+        <a href="{{ url_for('views.download',upload_id=prof.id)}}">Download File</a>
     </li>
     {% endfor %}
 </ol>
 <br/>
 <h5>Enter Employee Information</h5>
 <br/>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="fname">First Name</label>
         <input 
@@ -48,6 +50,15 @@
             id="position"
             name="position"
             placeholder="Enter position title"
+        />
+    </div>
+    <div class="for-group">
+        <label for="file">Upload Employee PDF</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="file"
+            name="file"
         />
     </div>
     <br/>

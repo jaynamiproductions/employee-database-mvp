@@ -7,6 +7,8 @@ class Profile(db.Model):
     fname = db.Column(db.String(50))
     lname = db.Column(db.String(50))
     position = db.Column(db.String(50))
+    filename = db.Column(db.String(50))
+    filedata = db.Column(db.LargeBinary)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
