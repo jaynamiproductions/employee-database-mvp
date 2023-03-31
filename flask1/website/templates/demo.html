@@ -8,6 +8,7 @@
         <div><label><b>First Name: </b></label> {{demo.fname}}</div>
         <div><label><b>Last Name: </b></label> {{demo.lname}}</div>
         <div><label><b>Position: </b></label> {{demo.position}}</div>
+        <div><label><b>Alias/Maiden Name: </b></label> {{demo.maiden}}</div>
         <div><label><i>Last Updated: </i></label> {{demo.date}}</div>
         <button type="button" class="close" onClick="deleteProfile({{ demo.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
@@ -40,9 +41,21 @@
             name="lname"
             placeholder="Enter last name"
             value="{{output[2]}}"
-
-        />
+        >
     </div>
+
+    <div class="form-group">
+        <label for="maiden">Alias or Maiden Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="maiden"
+            name="maiden"
+            placeholder="Enter alias or maiden name"
+            value="{{output[3]}}"
+        >
+    </div>
+
 
     <div class="form-group">
         <label for="position">Position</label>
@@ -52,10 +65,13 @@
             id="position"
             name="position"
             placeholder="Enter position title"
-            value="{{output[3]}}"
-            
+            value="{{output[4]}}"
         />
     </div>
+
+
+
+
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

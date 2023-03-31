@@ -33,7 +33,7 @@
             <span><label><b>Annual Competency Form: </b></label> {{form.hybrid}}</span>
             <span><a href="{{ url_for('views.hybrid_download',upload_id=form.id)}}">Download</a></span>
         </div>
-    
+        <div><label><i>Last Updated: </i></label> {{form.date}}</div>
         <button type="button" class="close" onClick="deleteForm({{ form.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
         </button>

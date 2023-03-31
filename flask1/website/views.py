@@ -20,6 +20,7 @@ def demo():
     if request.method == 'POST':
         fname = request.form.get('fname')
         lname = request.form.get('lname')
+        maiden = request.form.get('maiden')
         position = request.form.get('position')
 
         if len(fname) < 1:
@@ -29,7 +30,7 @@ def demo():
         elif len(position) < 1:
             flash('Please enter a valid position',category='Error')
         else:
-            full_demo = Demo(fname=fname,lname=lname,position=position,user_id=current_user.id)
+            full_demo = Demo(fname=fname,lname=lname,maiden=maiden,position=position,user_id=current_user.id)
             db.session.add(full_demo)
             db.session.commit()
 
@@ -70,7 +71,7 @@ def cert():
 @views.route('/admin', methods=['GET','POST'])
 @login_required
 def admin(): # set admin users here
-    if current_user.email == 'jason1@gmail.com':
+    if current_user.email == '':
         flash('Successfully accessed Admin page.',category='Success')
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()

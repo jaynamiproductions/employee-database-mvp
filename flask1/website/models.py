@@ -6,6 +6,7 @@ class Demo(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     fname = db.Column(db.String(50))
     lname = db.Column(db.String(50))
+    maiden = db.Column(db.String(50))
     position = db.Column(db.String(50))
     date = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
