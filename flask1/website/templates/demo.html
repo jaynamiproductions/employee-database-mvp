@@ -3,16 +3,15 @@
 <h4>Employee Demographics</h4>
 <br/>
 <ol class="list-group list-group-flush" id="profile_info">
-    {% for prof in user.profile_info %}
+    {% for demo in user.demo_info %}
     <li class="list-group-item">
-        <div><label><b>First Name: </b></label> {{prof.fname}}</div>
-        <div><label><b>Last Name: </b></label> {{prof.lname}}</div>
-        <div><label><b>Position: </b></label> {{prof.position}}</div>
-        <div><label><b>PDF: </b></label> {{prof.filename}}</div>
-        <button type="button" class="close" onClick="deleteProfile({{ prof.id }})">Clear Data
+        <div><label><b>First Name: </b></label> {{demo.fname}}</div>
+        <div><label><b>Last Name: </b></label> {{demo.lname}}</div>
+        <div><label><b>Position: </b></label> {{demo.position}}</div>
+        <div><label><i>Last Updated: </i></label> {{demo.date}}</div>
+        <button type="button" class="close" onClick="deleteProfile({{ demo.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
         </button>
-        <a href="{{ url_for('views.download',upload_id=prof.id)}}">Download File</a>
     </li>
     {% endfor %}
 </ol>
@@ -28,8 +27,8 @@
             id="fname"
             name="fname"
             placeholder="Enter first name"
-            value="{{ request.form['fname'] }}"
-        />
+            value="{{output[1]}}"
+        >
     </div>
 
     <div class="form-group">
@@ -40,7 +39,8 @@
             id="lname"
             name="lname"
             placeholder="Enter last name"
-            value="{{ request.form['lname'] }}"
+            value="{{output[2]}}"
+
         />
     </div>
 
@@ -52,17 +52,8 @@
             id="position"
             name="position"
             placeholder="Enter position title"
-            value="{{ request.form['position'] }}"
-        />
-    </div>
-    <div class="for-group">
-        <label for="file">Upload Employee PDF</label>
-        <input 
-            type="file"
-            class="form-control"
-            id="file"
-            name="file"
-            value="{{ request.form['file'] }}"
+            value="{{output[3]}}"
+            
         />
     </div>
     <br/>
