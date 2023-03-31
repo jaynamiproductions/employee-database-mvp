@@ -7,14 +7,14 @@
     <li class="list-group-item">
         <div><label><b>ACLS Certificate/Card: </b></label> {{certi.acls_cert}}</div>
         <div><label><b>Annual Trophon Certificate: </b></label> {{certi.annual_trophon}}</div>
-        <button type="button" class="close" onClick="deleteProfile({{ certi.id }})">Clear Data
+        <button type="button" class="close" onClick="deleteCert({{ certi.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
         </button>
     </li>
     {% endfor %}
 </ol>
 <br/>
-<h5>Enter Certificate Information</h5>
+<h5>Enter Information</h5>
 <br/>
 <form method="POST">
     <div class="form-group">

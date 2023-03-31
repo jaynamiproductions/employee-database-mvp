@@ -7,7 +7,6 @@ from io import BytesIO
 
 views = Blueprint('views', __name__)
 
-
 @views.route('/',methods=['GET','POST'])
 @login_required
 def home():
@@ -58,7 +57,6 @@ def download(upload_id):
     upload = Profile.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.filedata), download_name=upload.filename,as_attachment=True)
 
-
 @views.route('/delete-field', methods=['POST'])
 def delete_note():
     field = json.loads(request.data)
@@ -69,6 +67,18 @@ def delete_note():
             db.session.delete(field)
             db.session.commit()
     return jsonify({})
+
+@views.route('/delete-field2', methods=['POST'])
+def delete_note2():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Cert.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
 
 
 

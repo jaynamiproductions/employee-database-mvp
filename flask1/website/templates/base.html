@@ -58,10 +58,12 @@
         {% endif %}
         {% endwith %}
         <br/>
-        <h3 align="center">Northwell Health Employee Portal</h3>
+        <img src="static/sbmlogo.jpg" align="left"alt="SBM Logo" width="233" height="44"/>
+        <img src="static/sbushp.jpg" align="right"alt="SBU Logo" width="270" height="50"/>
+        <br/><br/><br/>
+        <h3 align="center">Stony Brook Medicine Employee Portal</h3>
         <h6 align="center"><i>Powered by EnvisionHealth IT</i></h6>
-
-
+        <br/>
 
         <div class="container">{% block content %}{% endblock %}</div>
 
@@ -84,8 +86,12 @@
             type="text/javascript"
             src="{{ url_for('static',filename='index.js')}}"
         ></script>
+        <script
+        type="text/javascript"
+        src="{{ url_for('static',filename='index2.js')}}"
+    ></script>
         <center>
-            <img src="static/EHITlogo.jpeg" align="center"alt="EHIT Logo" width="600" height="300" />
+            <img src="static/EHITlogo.jpeg" align="center"alt="EHIT Logo" width="600" height="300"/>
         </center>
         <br/><br/><br/><br/>
     </body>
