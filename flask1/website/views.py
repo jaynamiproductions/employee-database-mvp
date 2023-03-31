@@ -4,6 +4,8 @@ from .models import Profile, Cert
 from . import db
 import json
 from io import BytesIO
+import sqlite3
+
 
 views = Blueprint('views', __name__)
 
@@ -11,7 +13,6 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     return rt('home.html',user=current_user)
-
 
 @views.route('/demographics',methods=['GET','POST'])
 @login_required
@@ -49,15 +50,30 @@ def cert():
 
         db.session.add(full_cert)
         db.session.commit()
+
     return rt('certs.html',user=current_user,name=request.form.get('fname'))
 
+@views.route('/admin', methods=['GET','POST'])
+@login_required
+def admin(): # set admin users here
+    if current_user.email == '':
+        flash('Successfully accessed Admin page.',category='Success')
+        connect = sqlite3.connect('instance/database.db')
+        c = connect.cursor()
+        sql1 = 'SELECT * FROM profile'
+        c.execute(sql1)
+        output = c.fetchall()
+        return rt('admin2.html',user=current_user,data=output)
+    else:
+        flash('Admin page access denied.',category='Error')
+        return rt('admin.html',user=current_user)
 
 @views.route('/download/<upload_id>')
 def download(upload_id):
     upload = Profile.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.filedata), download_name=upload.filename,as_attachment=True)
 
-@views.route('/delete-field', methods=['POST'])
+@views.route('/delete-field', methods=['POST']) 
 def delete_note():
     field = json.loads(request.data)
     profileid = field['profileid']
@@ -78,6 +94,7 @@ def delete_note2():
             db.session.delete(field)
             db.session.commit()
     return jsonify({})
+
 
 
 
