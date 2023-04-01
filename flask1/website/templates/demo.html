@@ -7,8 +7,8 @@
     <li class="list-group-item">
         <div><label><b>First Name: </b></label> {{demo.fname}}</div>
         <div><label><b>Last Name: </b></label> {{demo.lname}}</div>
-        <div><label><b>Position: </b></label> {{demo.position}}</div>
         <div><label><b>Alias/Maiden Name: </b></label> {{demo.maiden}}</div>
+        <div><label><b>Position: </b></label> {{demo.position}}</div>
         <div><label><i>Last Updated: </i></label> {{demo.date}}</div>
         <button type="button" class="close" onClick="deleteProfile({{ demo.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
@@ -19,7 +19,7 @@
 <br/>
 <h5>Enter Information</h5>
 <br/>
-<form method="POST" enctype="multipart/form-data">
+<form method="POST">
     <div class="form-group">
         <label for="fname">First Name</label>
         <input 
@@ -28,8 +28,8 @@
             id="fname"
             name="fname"
             placeholder="Enter first name"
-            value="{{output[1]}}"
-        >
+            value="{{ data[0][0] }}"
+            >
     </div>
 
     <div class="form-group">
@@ -40,8 +40,8 @@
             id="lname"
             name="lname"
             placeholder="Enter last name"
-            value="{{output[2]}}"
-        >
+            value="{{ data[0][1] }}">
+
     </div>
 
     <div class="form-group">
@@ -52,10 +52,8 @@
             id="maiden"
             name="maiden"
             placeholder="Enter alias or maiden name"
-            value="{{output[3]}}"
-        >
+            value="{{ data[0][2] }}">
     </div>
-
 
     <div class="form-group">
         <label for="position">Position</label>
@@ -65,12 +63,9 @@
             id="position"
             name="position"
             placeholder="Enter position title"
-            value="{{output[4]}}"
-        />
+            value="{{ data[0][3] }}">
+
     </div>
-
-
-
 
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>

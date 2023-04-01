@@ -30,20 +30,24 @@ def demo():
         elif len(position) < 1:
             flash('Please enter a valid position',category='Error')
         else:
+            field = Demo.query.filter(Demo.user_id==current_user.id).first()
+            if field:
+                db.session.delete(field)
+                db.session.commit()
             full_demo = Demo(fname=fname,lname=lname,maiden=maiden,position=position,user_id=current_user.id)
             db.session.add(full_demo)
             db.session.commit()
 
             flash('Information saved in database.',category='Success')
-
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql1 = 'SELECT * FROM demo ORDER BY id DESC LIMIT 1'
+    sql1 = 'SELECT fname,lname,maiden,position FROM demo where user_id=' + str(current_user.id)
     c.execute(sql1)
-    output = c.fetchone()
+    output = c.fetchall()
     c.close()
     connect.close()
-    return rt('demo.html',user=current_user,output=output)
+
+    return rt('demo.html',user=current_user,data=output)
 
 
 @views.route('/certificates',methods=['GET','POST'])
@@ -60,7 +64,7 @@ def cert():
     
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql1 = 'SELECT * FROM cert ORDER BY id DESC LIMIT 1'
+    sql1 = 'SELECT * FROM cert WHERE user_id = (SELECT id FROM user)'
     c.execute(sql1)
     output = c.fetchone()
     c.close()
@@ -71,7 +75,7 @@ def cert():
 @views.route('/admin', methods=['GET','POST'])
 @login_required
 def admin(): # set admin users here
-    if current_user.email == '':
+    if current_user.email == 'jason@gmail.com':
         flash('Successfully accessed Admin page.',category='Success')
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()
