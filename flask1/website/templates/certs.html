@@ -21,23 +21,24 @@
     <div class="form-group">
         <label for="acls">ACLS Certificate/Card</label>
         <input 
-            type="number"
+            type="text"
             class="form-control"
             id="acls"
             name="acls"
             placeholder="Enter ACLS Certificate/Card"
+            value="{{ data[1] }}"
         />
     </div>
 
     <div class="form-group">
         <label for="trophon">Annual Trophon Certificate</label>
         <input 
-            type="number"
+            type="text"
             class="form-control"
             id="trophon"
             name="trophon"
             placeholder="Enter Annual Trophon Certificate"
-            value="{{data[2]}}"
+            value="{{ data[2] }}"
         />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

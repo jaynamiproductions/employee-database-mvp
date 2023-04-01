@@ -22,7 +22,7 @@ def demo():
         lname = request.form.get('lname')
         maiden = request.form.get('maiden')
         position = request.form.get('position')
-
+        
         if len(fname) < 1:
             flash('Please enter a valid first name',category='Error')
         elif len(lname) < 1:
@@ -41,14 +41,16 @@ def demo():
             flash('Information saved in database.',category='Success')
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql1 = 'SELECT fname,lname,maiden,position FROM demo where user_id=' + str(current_user.id)
+    sql1 = 'SELECT fname,lname,maiden,position FROM demo WHERE user_id=' + str(current_user.id)
     c.execute(sql1)
     output = c.fetchall()
     c.close()
     connect.close()
-
-    return rt('demo.html',user=current_user,data=output)
-
+    try:
+        if output[0]:
+            return rt('demo.html',user=current_user,data=output[0])
+    except:
+        return rt('demo.html',user=current_user,data=output)
 
 @views.route('/certificates',methods=['GET','POST'])
 @login_required
@@ -58,19 +60,27 @@ def cert():
         trophon = request.form.get('trophon')
         full_cert = Cert(acls_cert=acls,annual_trophon=trophon,user_id=current_user.id)
 
+        field = Cert.query.filter(Cert.user_id==current_user.id).first()
+        if field:
+            db.session.delete(field)
+            db.session.commit()
+
         db.session.add(full_cert)
         db.session.commit()
         flash('Information saved in database.',category='Success')
     
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql1 = 'SELECT * FROM cert WHERE user_id = (SELECT id FROM user)'
+    sql1 = 'SELECT * FROM cert WHERE user_id=' + str(current_user.id)
     c.execute(sql1)
-    output = c.fetchone()
+    output = c.fetchall()
     c.close()
     connect.close()
-
-    return rt('certs.html',user=current_user,data=output)
+    try:
+        if output[0]:
+            return rt('certs.html',user=current_user,data=output[0])
+    except:
+        return rt('certs.html',user=current_user,data=output)
 
 @views.route('/admin', methods=['GET','POST'])
 @login_required
@@ -101,6 +111,9 @@ def form():
         file5 = request.files['file5']
         file6 = request.files['file6']
         file7 = request.files['file7']
+        if file1 == None:
+            flash('Upload .',category='Success')
+
 
         full_form = Form(
             kronos=file1.filename,kronosdata=file1.read(),
@@ -112,11 +125,26 @@ def form():
             hybrid=file7.filename,hybriddata=file7.read(),
             user_id=current_user.id
             )
+
+        field = Form.query.filter(Form.user_id==current_user.id).first()
+        if field:
+            db.session.delete(field)
+            db.session.commit()
+
         db.session.add(full_form)
         db.session.commit()
-        flash('Information saved in database.',category='Success')
-    return rt('forms.html',user=current_user)
 
+        flash('Information saved in database.',category='Success')
+    
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql1 = 'SELECT * FROM form WHERE user_id=' + str(current_user.id)
+    c.execute(sql1)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+
+    return rt('forms.html',user=current_user,data=output)
 
 
 @views.route('/kronos_download/<upload_id>')

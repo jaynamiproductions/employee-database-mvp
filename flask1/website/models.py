@@ -13,13 +13,14 @@ class Demo(db.Model):
 
 class Cert(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    acls_cert = db.Column(db.Integer)
+    acls_cert = db.Column(db.String(50))
     annual_trophon = db.Column(db.String(50))
     date = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Form(db.Model):
     id = db.Column(db.Integer,primary_key=True)
+
     kronos = db.Column(db.String(50))
     kronosdata = db.Column(db.LargeBinary)
 
