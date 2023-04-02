@@ -23,8 +23,14 @@ class Demo(db.Model):
     city = db.Column(db.String(50))
     state = db.Column(db.String(50))
     zipcode = db.Column(db.String(50))
-    
-
+    hphone = db.Column(db.String(50))
+    cphone = db.Column(db.String(50))
+    wphone = db.Column(db.String(50))
+    wext = db.Column(db.String(50))
+    dob = db.Column(db.String(50))
+    emergencyname = db.Column(db.String(50))
+    emergencyphone = db.Column(db.String(50))
+    emergencyrelation = db.Column(db.String(50))
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -32,34 +38,26 @@ class Cert(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     acls_cert = db.Column(db.String(50))
     annual_trophon = db.Column(db.String(50))
-    date = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Form(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-
     kronos = db.Column(db.String(50))
     kronosdata = db.Column(db.LargeBinary)
-
     performance = db.Column(db.String(50))
     performancedata = db.Column(db.LargeBinary)
-
     attestation = db.Column(db.String(50))
     attestationdata = db.Column(db.LargeBinary)
-
     ivcontrast = db.Column(db.String(50))
     ivcontrastdata = db.Column(db.LargeBinary)
-
     supportperform = db.Column(db.String(50))
     supportperformdata = db.Column(db.LargeBinary)
-
     couns = db.Column(db.String(50))
     counsdata = db.Column(db.LargeBinary)
-
     hybrid = db.Column(db.String(50))
     hybriddata = db.Column(db.LargeBinary)
-
-    date = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class User(db.Model, UserMixin):

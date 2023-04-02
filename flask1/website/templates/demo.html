@@ -23,6 +23,14 @@
         <div><label><b>City: </b></label> {{demo.city}}</div>
         <div><label><b>State: </b></label> {{demo.state}}</div>
         <div><label><b>Zip Code: </b></label> {{demo.zipcode}}</div>
+        <div><label><b>Home Phone number: </b></label> {{demo.hphone}}</div>
+        <div><label><b>Cell Phone number: </b></label> {{demo.cphone}}</div>
+        <div><label><b>Work Phone number: </b></label> {{demo.wphone}}</div>
+        <div><label><b>Work Extension: </b></label> {{demo.wext}}</div>
+        <div><label><b>Date of Birth: </b></label> {{demo.dob}}</div>
+        <div><label><b>Emergency Contact Name: </b></label> {{demo.emergencyname}}</div>
+        <div><label><b>Emergency Contact Phone: </b></label> {{demo.emergencyphone}}</div>
+        <div><label><b>Emergency Contact Relationship to Employee: </b></label> {{demo.emergencyrelation}}</div>
         <div><label><i>Last Updated: </i></label> {{demo.update}}</div>
         <button type="button" class="close" onClick="deleteProfile({{ demo.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
@@ -271,10 +279,86 @@
             placeholder="Enter zip code"
             value="{{ data[18] }}">
     </div>
-
-
-
-    <br/>
+    <div class="form-group">
+        <label for="hphone">Home Phone number:</label>
+        <input 
+            type="number" 
+            class="form-control"
+            id="hphone" 
+            name="hphone" 
+            placeholder="Enter home phone number (e.g. 5551118888)"
+            value="{{ data[19] }}">
+    </div>
+    <div class="form-group">
+        <label for="cphone">Cell Phone number:</label>
+        <input 
+            type="number" 
+            class="form-control"
+            id="cphone" 
+            name="cphone" 
+            placeholder="Enter cell phone number (e.g. 5551118888)"
+            value="{{ data[20] }}">
+    </div>
+    <div class="form-group">
+        <label for="wphone">Work Phone number:</label>
+        <input 
+            type="number" 
+            class="form-control"
+            id="wphone" 
+            name="wphone" 
+            placeholder="Enter work phone number (e.g. 5551118888)"
+            value="{{ data[21] }}">
+    </div>
+    <div class="form-group">
+        <label for="wext">Work Extension:</label>
+        <input 
+            type="text" 
+            class="form-control"
+            id="wext" 
+            name="wext" 
+            placeholder="Enter work extension"
+            value="{{ data[22] }}">
+    </div>
+    <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input 
+            type="date"
+            class="form-control"
+            id="dob"
+            name="dob"
+            placeholder="Enter Date of Birth"
+            value="{{ data[23] }}">
+    </div>
+    <div class="form-group">
+        <label for="emergencyname">Emergency Contact Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="emergencyname"
+            name="emergencyname"
+            placeholder="Enter Emergency Contact Name"
+            value="{{ data[24] }}">
+    </div>
+    <div class="form-group">
+        <label for="emergencyphone">Emergency Contact Phone Number</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="emergencyphone"
+            name="emergencyphone"
+            placeholder="Enter Emergency Contact Phone Number"
+            value="{{ data[25] }}">
+    </div>
+    <div class="form-group">
+        <label for="emergencyrelation">Emergency Contact Relationship to Employee</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="emergencyrelation"
+            name="emergencyrelation"
+            placeholder="Enter Relationship to Employee"
+            value="{{ data[26] }}">
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <br/>

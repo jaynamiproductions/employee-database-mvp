@@ -36,11 +36,15 @@ def demo():
         city = request.form.get('city')
         state = request.form.get('state')
         zipcode = request.form.get('zipcode')
+        hphone = request.form.get('hphone')
+        cphone = request.form.get('cphone')
+        wphone = request.form.get('wphone')
+        wext = request.form.get('wext')
+        dob = request.form.get('dob')
+        emergencyname = request.form.get('emergencyname')
+        emergencyphone = request.form.get('emergencyphone')
+        emergencyrelation = request.form.get('emergencyrelation')
 
-
-
-
-    
         field = Demo.query.filter(Demo.user_id==current_user.id).first()
         if field:
             db.session.delete(field)
@@ -64,6 +68,14 @@ def demo():
             city=city,
             state=state,
             zipcode=zipcode,
+            hphone=hphone,
+            cphone=cphone,
+            wphone=wphone,
+            wext=wext,
+            dob=dob,
+            emergencyname=emergencyname,
+            emergencyphone=emergencyphone,
+            emergencyrelation=emergencyrelation,
             user_id=current_user.id)
         db.session.add(full_demo)
         db.session.commit()
