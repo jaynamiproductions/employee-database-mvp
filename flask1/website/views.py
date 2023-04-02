@@ -21,27 +21,51 @@ def demo():
         fname = request.form.get('fname')
         lname = request.form.get('lname')
         maiden = request.form.get('maiden')
+        sbid = request.form.get('sbid')
         position = request.form.get('position')
-        
-        if len(fname) < 1:
-            flash('Please enter a valid first name',category='Error')
-        elif len(lname) < 1:
-            flash('Please enter a valid last name',category='Error')
-        elif len(position) < 1:
-            flash('Please enter a valid position',category='Error')
-        else:
-            field = Demo.query.filter(Demo.user_id==current_user.id).first()
-            if field:
-                db.session.delete(field)
-                db.session.commit()
-            full_demo = Demo(fname=fname,lname=lname,maiden=maiden,position=position,user_id=current_user.id)
-            db.session.add(full_demo)
-            db.session.commit()
+        linenum = request.form.get('linenum')
+        dept = request.form.get('dept')
+        ccnn = request.form.get('ccnn')
+        salary = request.form.get('salary')
+        appt = request.form.get('appt')
+        hiredate = request.form.get('hiredate')
+        apptdate = request.form.get('apptdate')
+        supervisor = request.form.get('supervisor')
+        sbemail = request.form.get('sbemail')
+        home = request.form.get('home')
 
-            flash('Information saved in database.',category='Success')
+
+
+
+    
+        field = Demo.query.filter(Demo.user_id==current_user.id).first()
+        if field:
+            db.session.delete(field)
+            db.session.commit()
+        full_demo = Demo(
+            fname=fname,
+            lname=lname,
+            maiden=maiden,
+            sbid=sbid,
+            position=position,
+            linenum=linenum,
+            dept=dept,
+            ccnn=ccnn,
+            salary=salary,
+            appt=appt,
+            hiredate=hiredate,
+            apptdate=apptdate,
+            supervisor=supervisor,
+            sbemail=sbemail,
+            home=home,
+            user_id=current_user.id)
+        db.session.add(full_demo)
+        db.session.commit()
+
+        flash('Information saved in database.',category='Success')
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql1 = 'SELECT fname,lname,maiden,position FROM demo WHERE user_id=' + str(current_user.id)
+    sql1 = 'SELECT * FROM demo WHERE user_id=' + str(current_user.id)
     c.execute(sql1)
     output = c.fetchall()
     c.close()
@@ -85,7 +109,7 @@ def cert():
 @views.route('/admin', methods=['GET','POST'])
 @login_required
 def admin(): # set admin users here
-    if current_user.email == 'jason@gmail.com':
+    if current_user.email == 'jason1@gmail.com':
         flash('Successfully accessed Admin page.',category='Success')
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()

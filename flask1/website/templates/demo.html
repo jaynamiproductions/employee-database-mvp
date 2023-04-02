@@ -8,8 +8,19 @@
         <div><label><b>First Name: </b></label> {{demo.fname}}</div>
         <div><label><b>Last Name: </b></label> {{demo.lname}}</div>
         <div><label><b>Alias/Maiden Name: </b></label> {{demo.maiden}}</div>
+        <div><label><b>SBID# </b></label> {{demo.sbid}}</div>
         <div><label><b>Position: </b></label> {{demo.position}}</div>
-        <div><label><i>Last Updated: </i></label> {{demo.date}}</div>
+        <div><label><b>Line#: </b></label> {{demo.linenum}}</div>
+        <div><label><b>Department: </b></label> {{demo.dept}}</div>
+        <div><label><b>Cost Center Name & Number: </b></label> {{demo.ccnn}}</div>
+        <div><label><b>Salary Grade: </b></label> {{demo.salary}}</div>
+        <div><label><b>Current Appointment: </b></label> {{demo.appt}}</div>
+        <div><label><b>State Hire Date: </b></label> {{demo.hiredate}}</div>
+        <div><label><b>Permanent Appointment Date: </b></label> {{demo.apptdate}}</div>
+        <div><label><b>Supervisor: </b></label> {{demo.supervisor}}</div>
+        <div><label><b>SB Email Address: </b></label> {{demo.sbemail}}</div>
+        <div><label><b>Home Address: </b></label> {{demo.home}}</div>
+        <div><label><i>Last Updated: </i></label> {{demo.update}}</div>
         <button type="button" class="close" onClick="deleteProfile({{ demo.id }})">Clear Data
             <span aria-hidden="true">&times;</span>
         </button>
@@ -28,7 +39,7 @@
             id="fname"
             name="fname"
             placeholder="Enter first name"
-            value="{{ data[0] }}"
+            value="{{ data[1] }}"
             >
     </div>
 
@@ -40,7 +51,7 @@
             id="lname"
             name="lname"
             placeholder="Enter last name"
-            value="{{ data[1] }}">
+            value="{{ data[2] }}">
 
     </div>
 
@@ -52,7 +63,18 @@
             id="maiden"
             name="maiden"
             placeholder="Enter alias or maiden name"
-            value="{{ data[2] }}">
+            value="{{ data[3] }}">
+    </div>
+
+    <div class="form-group">
+        <label for="sbid">SB ID#</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="sbid"
+            name="sbid"
+            placeholder="Enter SB ID number"
+            value="{{ data[4] }}">
     </div>
 
     <div class="form-group">
@@ -63,9 +85,110 @@
             id="position"
             name="position"
             placeholder="Enter position title"
-            value="{{ data[3] }}">
-
+            value="{{ data[5] }}">
     </div>
+    <div class="form-group">
+        <label for="linenum">Line #</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="linenum"
+            name="linenum"
+            placeholder="Enter line number"
+            value="{{ data[6] }}">
+    </div>
+    <div class="form-group">
+        <label for="dept">Department</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="dept"
+            name="dept"
+            placeholder="Enter department"
+            value="{{ data[7] }}">
+    </div>
+    <div class="form-group">
+        <label for="ccnnn">Cost Center Name & Number</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="ccnnn"
+            name="ccnn"
+            placeholder="Enter Cost Center Name & Number"
+            value="{{ data[8] }}">
+    </div>
+    <div class="form-group">
+        <label for="salary">Salary Grade</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="salary"
+            name="salary"
+            placeholder="Enter Salary Grade"
+            value="{{ data[9] }}">
+    </div>
+    <div class="form-group">
+        <label for="appt">Current Appointment</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="appt"
+            name="appt"
+            placeholder="Enter Current Appointment"
+            value="{{ data[10] }}">
+    </div>
+    <div class="form-group">
+        <label for="hiredate">State Hire Date</label>
+        <input 
+            type="date"
+            class="form-control"
+            id="hiredate"
+            name="hiredate"
+            placeholder="Enter State Hire Date"
+            value="{{ data[11] }}">
+    </div>
+    <div class="form-group">
+        <label for="apptdate">Permanent Appointment Date</label>
+        <input 
+            type="date"
+            class="form-control"
+            id="apptdate"
+            name="apptdate"
+            placeholder="Enter Permanent Appointment Date"
+            value="{{ data[12] }}">
+    </div>
+    <div class="form-group">
+        <label for="supervisor">Supervisor</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="supervisor"
+            name="supervisor"
+            placeholder="Enter Supervisor name"
+            value="{{ data[13] }}">
+    </div>
+    <div class="form-group">
+        <label for="sbemail">SB Email Address</label>
+        <input 
+            type="email"
+            class="form-control"
+            id="sbemail"
+            name="sbemail"
+            placeholder="Enter SB email address"
+            value="{{ data[14] }}">
+    </div>
+    <div class="form-group">
+        <label for="home">Home Address</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="home"
+            name="home"
+            placeholder="Enter home address"
+            value="{{ data[15] }}">
+    </div>
+
+
 
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>

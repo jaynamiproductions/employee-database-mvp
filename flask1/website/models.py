@@ -1,5 +1,6 @@
 from . import db
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 import datetime
 
 class Demo(db.Model):
@@ -7,8 +8,20 @@ class Demo(db.Model):
     fname = db.Column(db.String(50))
     lname = db.Column(db.String(50))
     maiden = db.Column(db.String(50))
+    sbid = db.Column(db.Integer)
     position = db.Column(db.String(50))
-    date = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    linenum = db.Column(db.Integer)
+    dept = db.Column(db.String(50))
+    ccnn = db.Column(db.String(50))
+    salary = db.Column(db.String(50))
+    appt = db.Column(db.String(50))
+    hiredate = db.Column(db.String(50))
+    apptdate = db.Column(db.String(50))
+    supervisor = db.Column(db.String(50))
+    sbemail = db.Column(db.String(50))
+    home = db.Column(db.String(50))
+
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Cert(db.Model):
