@@ -20,6 +20,10 @@ class Demo(db.Model):
     supervisor = db.Column(db.String(50))
     sbemail = db.Column(db.String(50))
     home = db.Column(db.String(50))
+    city = db.Column(db.String(50))
+    state = db.Column(db.String(50))
+    zipcode = db.Column(db.String(50))
+    
 
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

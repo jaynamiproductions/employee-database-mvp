@@ -33,6 +33,9 @@ def demo():
         supervisor = request.form.get('supervisor')
         sbemail = request.form.get('sbemail')
         home = request.form.get('home')
+        city = request.form.get('city')
+        state = request.form.get('state')
+        zipcode = request.form.get('zipcode')
 
 
 
@@ -58,6 +61,9 @@ def demo():
             supervisor=supervisor,
             sbemail=sbemail,
             home=home,
+            city=city,
+            state=state,
+            zipcode=zipcode,
             user_id=current_user.id)
         db.session.add(full_demo)
         db.session.commit()
@@ -109,7 +115,7 @@ def cert():
 @views.route('/admin', methods=['GET','POST'])
 @login_required
 def admin(): # set admin users here
-    if current_user.email == 'jason1@gmail.com':
+    if current_user.email == '':
         flash('Successfully accessed Admin page.',category='Success')
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()
