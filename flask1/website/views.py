@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template as rt, request, flash, jsonify, send_file
 from flask_login import login_required,current_user
-from .models import Demo, Cert, Form
+from .models import Demo, Cert, Form, Clinical
 from . import db
 import json
 from io import BytesIO
@@ -45,10 +45,6 @@ def demo():
         emergencyphone = request.form.get('emergencyphone')
         emergencyrelation = request.form.get('emergencyrelation')
 
-        field = Demo.query.filter(Demo.user_id==current_user.id).first()
-        if field:
-            db.session.delete(field)
-            db.session.commit()
         full_demo = Demo(
             fname=fname,
             lname=lname,
@@ -77,10 +73,15 @@ def demo():
             emergencyphone=emergencyphone,
             emergencyrelation=emergencyrelation,
             user_id=current_user.id)
+        
+        field = Demo.query.filter(Demo.user_id==current_user.id).first()
+        if field:
+            db.session.delete(field)
+            db.session.commit()
         db.session.add(full_demo)
         db.session.commit()
-
         flash('Information saved in database.',category='Success')
+
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
     sql1 = 'SELECT * FROM demo WHERE user_id=' + str(current_user.id)
@@ -100,13 +101,54 @@ def cert():
     if request.method == 'POST':
         acls = request.form.get('acls')
         trophon = request.form.get('trophon')
-        full_cert = Cert(acls_cert=acls,annual_trophon=trophon,user_id=current_user.id)
+        ardms = request.form.get('ardms')
+        arrt = request.form.get('arrt')
+        bls = request.form.get('bls')
+        cci = request.form.get('cci')
+        school1 = request.form.get('school1')
+        edu1 = request.form.get('edu1')
+        major1 = request.form.get('major1')
+        school2 = request.form.get('school2')
+        edu2 = request.form.get('edu2')
+        major2 = request.form.get('major2')
+        nurse_asst = request.form.get('nurse_asst')
+        nysnurse_asst = request.form.get('nysnurse_asst')
+        rn = request.form.get('rn')
+        nysrn = request.form.get('nysrn')
+        doh = request.form.get('doh')
+        pals = request.form.get('pals')
+        radiographer = request.form.get('radiographer')
+        visa = request.form.get('visa')
+        misc = request.form.get('misc')
+
+        full_cert = Cert(
+            acls_cert=acls,
+            annual_trophon=trophon,
+            ardms=ardms,
+            arrt=arrt,
+            bls=bls,
+            cci=cci,
+            school1=school1,
+            edu1=edu1,
+            major1=major1,
+            school2=school2,
+            edu2=edu2,
+            major2=major2,
+            nurse_asst=nurse_asst,
+            nysnurse_asst=nysnurse_asst,
+            rn=rn,
+            nysrn=nysrn,
+            doh=doh,
+            pals=pals,
+            radiographer=radiographer,
+            visa=visa,
+            misc=misc,
+            user_id=current_user.id)
 
         field = Cert.query.filter(Cert.user_id==current_user.id).first()
         if field:
             db.session.delete(field)
             db.session.commit()
-
         db.session.add(full_cert)
         db.session.commit()
         flash('Information saved in database.',category='Success')
@@ -123,6 +165,43 @@ def cert():
             return rt('certs.html',user=current_user,data=output[0])
     except:
         return rt('certs.html',user=current_user,data=output)
+    
+@views.route('/clinical-education', methods=['GET','POST'])
+@login_required
+def clinical_ed():
+    if request.method == 'POST':
+        rn_na_comp = request.form.get('rn_na_comp')
+        linen = request.files['linen']
+
+
+
+
+        full_clin = Clinical(
+            rn_na_comp=rn_na_comp,
+            linen=linen.filename,linendata=linen.read(),
+
+            user_id=current_user.id)
+        
+        row = Clinical.query.filter(Clinical.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full_clin)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM clinical WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('clinical.html',user=current_user,data=output[0])
+    except:
+        return rt('clinical.html',user=current_user,data=output)
+
 
 @views.route('/admin', methods=['GET','POST'])
 @login_required
@@ -153,9 +232,6 @@ def form():
         file5 = request.files['file5']
         file6 = request.files['file6']
         file7 = request.files['file7']
-        if file1 == None:
-            flash('Upload .',category='Success')
-
 
         full_form = Form(
             kronos=file1.filename,kronosdata=file1.read(),
@@ -225,6 +301,13 @@ def hybrid_download(upload_id):
     return send_file(BytesIO(upload.hybriddata), download_name=upload.hybrid,as_attachment=True)
 
 
+@views.route('/linen_download/<upload_id>')
+def linen_download(upload_id):
+    upload = Clinical.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.linendata), download_name=upload.linen,as_attachment=True)
+
+
+
 
 
 
@@ -254,12 +337,25 @@ def delete_note2():
 def delete_note3():
     field = json.loads(request.data)
     profileid = field['profileid']
+    field = Clinical.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/delete-forms', methods=['POST'])
+def delete_note4():
+    field = json.loads(request.data)
+    profileid = field['profileid']
     field = Form.query.get(profileid)
     if field:
         if field.user_id == current_user.id:
             db.session.delete(field)
             db.session.commit()
     return jsonify({})
+
+
 
 
 

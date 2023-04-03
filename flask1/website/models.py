@@ -38,8 +38,38 @@ class Cert(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     acls_cert = db.Column(db.String(50))
     annual_trophon = db.Column(db.String(50))
+    ardms = db.Column(db.String(50))
+    arrt = db.Column(db.String(50))
+    bls = db.Column(db.String(50))
+    cci = db.Column(db.String(50))
+    school1 = db.Column(db.String(50))
+    edu1 = db.Column(db.String(50))
+    major1 = db.Column(db.String(50))
+    school2 = db.Column(db.String(50))
+    edu2 = db.Column(db.String(50))
+    major2 = db.Column(db.String(50))
+    nurse_asst = db.Column(db.String(50))
+    nysnurse_asst = db.Column(db.String(50))
+    rn = db.Column(db.String(50))
+    nysrn = db.Column(db.String(50))
+    doh = db.Column(db.String(50))
+    pals = db.Column(db.String(50))
+    radiographer = db.Column(db.String(50))
+    visa = db.Column(db.String(50))
+    misc = db.Column(db.String(50))
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Clinical(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    rn_na_comp = db.Column(db.String(50))
+
+    linen = db.Column(db.String(50))
+    linendata = db.Column(db.LargeBinary)
+
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 
 class Form(db.Model):
     id = db.Column(db.Integer,primary_key=True)
@@ -67,4 +97,5 @@ class User(db.Model, UserMixin):
     demo_info = db.relationship('Demo')
     cert_info = db.relationship('Cert')
     form_info = db.relationship('Form')
+    clinical_info = db.relationship('Clinical')
 

@@ -28,15 +28,15 @@
                     <a class="nav-item nav-link" id="home" href="/">Home</a>
                     <a class="nav-item nav-link" id="demographics" href="/demographics">Demographics</a>
                     <a class="nav-item nav-link" id="certificates" href="/certificates">Certificates</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Clinical Education</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Employee Notes</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Electronic Equipment & IT</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Employee Health</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Human Resources</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Labor Relations</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">New Hires</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Payroll</a>
-                    <a class="nav-item nav-link" id="certificates" href="/certificates">Timekeeping</a>
+                    <a class="nav-item nav-link" id="clinicaleducation" href="/clinical-education">Clinical Education</a>
+                    <a class="nav-item nav-link" id="employeenotes" href="/employee-notes">Employee Notes</a>
+                    <a class="nav-item nav-link" id="equipment&it" href="/equipment&it">Electronic Equipment & IT</a>
+                    <a class="nav-item nav-link" id="employeehealth" href="/employee-health">Employee Health</a>
+                    <a class="nav-item nav-link" id="humanresources" href="/human-resources">Human Resources</a>
+                    <a class="nav-item nav-link" id="laborrelations" href="/labor-relations">Labor Relations</a>
+                    <a class="nav-item nav-link" id="newhires" href="/new-hires">New Hires</a>
+                    <a class="nav-item nav-link" id="payroll" href="/payroll">Payroll</a>
+                    <a class="nav-item nav-link" id="timekeeping" href="/timekeeping">Timekeeping</a>
                     <a class="nav-item nav-link" id="forms" href="/forms">Forms</a>
                     <a class="nav-item nav-link" id="admin" href="/admin">Admin</a>
                     <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
@@ -104,7 +104,11 @@
         <script
             type="text/javascript"
             src="{{ url_for('static',filename='index3.js')}}"
->       </script>
+        ></script>
+        <script
+            type="text/javascript"
+            src="{{ url_for('static',filename='forms.js')}}"
+        ></script>
         <center>
             <img src="static/EHITlogo.jpeg" align="center"alt="EHIT Logo" width="600" height="300"/>
         </center>

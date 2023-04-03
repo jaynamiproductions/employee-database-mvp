@@ -47,8 +47,8 @@ def sign_up():
         #     flash("Enter your Stony Brook email address.", category='Error')
         elif password1 != password2:
             flash("Passwords don't match.", category='Error')
-        elif len(password1) < 8:
-            flash("Password must be at least 8 characters.", category="Error")
+        elif len(password1) < 5:
+            flash("Password must be at least 5 characters.", category="Error")
         else:
             newuser = User(email=email,password=generate_password_hash(password1,method='sha256'))
             db.session.add(newuser)
