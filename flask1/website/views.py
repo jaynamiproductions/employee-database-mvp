@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template as rt, request, flash, jsonify, send_file
 from flask_login import login_required,current_user
-from .models import Demo, Cert, Form, Clinical
+from .models import Demo, Cert, Form, Clinical, Emp_notes
 from . import db
 import json
 from io import BytesIO
@@ -171,15 +171,19 @@ def cert():
 def clinical_ed():
     if request.method == 'POST':
         rn_na_comp = request.form.get('rn_na_comp')
+        rn_na_recert = request.form.get('rn_na_recert')
+        rn_na_orien = request.form.get('rn_na_orien')
         linen = request.files['linen']
-
-
-
+        pyxis = request.files['pyxis']
+        misc = request.form.get('misc')
 
         full_clin = Clinical(
             rn_na_comp=rn_na_comp,
+            rn_na_recert=rn_na_recert,
+            rn_na_orien=rn_na_orien,
             linen=linen.filename,linendata=linen.read(),
-
+            pyxis=pyxis.filename,pyxisdata=pyxis.read(),
+            misc=misc,
             user_id=current_user.id)
         
         row = Clinical.query.filter(Clinical.user_id==current_user.id).first()
@@ -201,6 +205,46 @@ def clinical_ed():
             return rt('clinical.html',user=current_user,data=output[0])
     except:
         return rt('clinical.html',user=current_user,data=output)
+    
+
+
+@views.route('/employee-notes', methods=['GET','POST'])
+@login_required
+def emp_notes():
+    if request.method == 'POST':
+        blood_don = request.files['blood_don']
+        cancerscreen = request.files['cancerscreen']
+        issuednote = request.files['issuednote']
+
+        full_notes = Emp_notes(
+            blood_don=blood_don.filename,blood_dondata=blood_don.read(),
+            cancerscreen=cancerscreen.filename,cancerscreendata=cancerscreen.read(),
+            issuednote=issuednote.filename,issuednotedata=issuednote.read(),
+
+            user_id = current_user.id)
+
+        
+        row = Emp_notes.query.filter(Emp_notes.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full_notes)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM Emp_notes WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('emp_notes.html',user=current_user,data=output[0])
+    except:
+        return rt('emp_notes.html',user=current_user,data=output)
+
+
 
 
 @views.route('/admin', methods=['GET','POST'])
@@ -264,7 +308,7 @@ def form():
 
     return rt('forms.html',user=current_user,data=output)
 
-
+# for Forms
 @views.route('/kronos_download/<upload_id>')
 def kronos_download(upload_id):
     upload = Form.query.filter_by(id=upload_id).first()
@@ -300,12 +344,32 @@ def hybrid_download(upload_id):
     upload = Form.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.hybriddata), download_name=upload.hybrid,as_attachment=True)
 
-
+# for Clinical Education
 @views.route('/linen_download/<upload_id>')
 def linen_download(upload_id):
     upload = Clinical.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.linendata), download_name=upload.linen,as_attachment=True)
 
+@views.route('/pyxis_download/<upload_id>')
+def pyxis_download(upload_id):
+    upload = Clinical.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.pyxisdata), download_name=upload.pyxis,as_attachment=True)
+
+# for Doctor and Employee notes
+@views.route('/blood_don_download/<upload_id>')
+def blood_don_download(upload_id):
+    upload = Emp_notes.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.blood_dondata), download_name=upload.blood_don,as_attachment=True)
+
+@views.route('/cancerscreen_download/<upload_id>')
+def cancerscreen_download(upload_id):
+    upload = Emp_notes.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.cancerscreendata), download_name=upload.cancerscreen,as_attachment=True)
+
+@views.route('/issuednote_download/<upload_id>')
+def issuednote_download(upload_id):
+    upload = Emp_notes.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.issuednotedata), download_name=upload.issuednote,as_attachment=True)
 
 
 
@@ -344,8 +408,21 @@ def delete_note3():
             db.session.commit()
     return jsonify({})
 
-@views.route('/delete-forms', methods=['POST'])
+@views.route('/delete-field4', methods=['POST'])
 def delete_note4():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Emp_notes.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+
+
+@views.route('/delete-forms', methods=['POST'])
+def delete_forms():
     field = json.loads(request.data)
     profileid = field['profileid']
     field = Form.query.get(profileid)

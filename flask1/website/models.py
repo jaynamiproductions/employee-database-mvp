@@ -63,9 +63,24 @@ class Cert(db.Model):
 class Clinical(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     rn_na_comp = db.Column(db.String(50))
-
+    rn_na_recert = db.Column(db.String(50))
+    rn_na_orien = db.Column(db.String(50))
     linen = db.Column(db.String(50))
     linendata = db.Column(db.LargeBinary)
+    pyxis = db.Column(db.String(50))
+    pyxisdata = db.Column(db.LargeBinary)
+    misc = db.Column(db.String(50))
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Emp_notes(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    blood_don = db.Column(db.String(50))
+    blood_dondata = db.Column(db.LargeBinary)
+    cancerscreen = db.Column(db.String(50))
+    cancerscreendata = db.Column(db.LargeBinary)
+    issuednote = db.Column(db.String(50))
+    issuednotedata = db.Column(db.LargeBinary)
 
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -98,4 +113,5 @@ class User(db.Model, UserMixin):
     cert_info = db.relationship('Cert')
     form_info = db.relationship('Form')
     clinical_info = db.relationship('Clinical')
+    emp_notes_info = db.relationship('Emp_notes')
 
