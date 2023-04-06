@@ -1,9 +1,8 @@
 from . import db
 from flask_login import UserMixin
-from sqlalchemy.sql import func
 import datetime
 
-class Demo(db.Model):
+class Demographics(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     fname = db.Column(db.String(50))
     lname = db.Column(db.String(50))
@@ -34,7 +33,7 @@ class Demo(db.Model):
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-class Cert(db.Model):
+class Certifications(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     acls_cert = db.Column(db.String(50))
     annual_trophon = db.Column(db.String(50))
@@ -60,7 +59,7 @@ class Cert(db.Model):
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-class Clinical(db.Model):
+class Clinical_edu(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     rn_na_comp = db.Column(db.String(50))
     rn_na_recert = db.Column(db.String(50))
@@ -81,7 +80,69 @@ class Emp_notes(db.Model):
     cancerscreendata = db.Column(db.LargeBinary)
     issuednote = db.Column(db.String(50))
     issuednotedata = db.Column(db.LargeBinary)
+    medical = db.Column(db.String(50))
+    medicaldata = db.Column(db.LargeBinary)
+    proofdeath = db.Column(db.String(50))
+    proofdeathdata = db.Column(db.LargeBinary)
+    resignation = db.Column(db.String(50))
+    resignationdata = db.Column(db.LargeBinary)
+    misc = db.Column(db.String(50))
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+class Equipment_IT(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    app_access = db.Column(db.String(50))
+    electronics = db.Column(db.String(50))
+    vpninfo = db.Column(db.String(50))
+    misc = db.Column(db.String(50))
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Emp_health(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    health_assessment = db.Column(db.String(50))
+    covid = db.Column(db.String(50))
+    n95 = db.Column(db.String(50))
+    vaccination = db.Column(db.String(50))
+    vaccinationdata = db.Column(db.LargeBinary)
+    misc = db.Column(db.String(50))
+    update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Human_resources(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    attestation = db.Column(db.String(50))
+    attestationdata = db.Column(db.LargeBinary)
+    dept_competency = db.Column(db.String(50))
+    dept_competencydata = db.Column(db.LargeBinary)
+    ivcontrast = db.Column(db.String(50))
+    ivcontrastdata = db.Column(db.LargeBinary)
+    lmsproof = db.Column(db.String(50))
+    lmsproofdata = db.Column(db.LargeBinary)
+    performance_eval = db.Column(db.String(50))
+    performance_evaldata = db.Column(db.LargeBinary)
+    performance_program = db.Column(db.String(50))
+    performance_programdata = db.Column(db.LargeBinary)
+    trophon = db.Column(db.String(50))
+    trophondata = db.Column(db.LargeBinary)
+    awards = db.Column(db.String(50))
+    awardsdata = db.Column(db.LargeBinary)
+    orientation = db.Column(db.String(50))
+    orientationdata = db.Column(db.LargeBinary)
+    leave_letter = db.Column(db.String(50))
+    leave_letterdata = db.Column(db.LargeBinary)
+    expiration_notice = db.Column(db.String(50))
+    expiration_noticedata = db.Column(db.LargeBinary)
+    description = db.Column(db.String(50))
+    hospital_checklist = db.Column(db.String(50))
+    hospital_checklistdata = db.Column(db.LargeBinary)
+    chartingnumber_request = db.Column(db.String(50))
+    chartingnumber_requestdata = db.Column(db.LargeBinary)
+    appt_packet = db.Column(db.String(50))
+    appt_packetdata = db.Column(db.LargeBinary)
+    status = db.Column(db.String(50))
+    misc = db.Column(db.String(50))
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -109,9 +170,14 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer,primary_key=True)
     email = db.Column(db.String(150),unique=True)
     password = db.Column(db.String(150))
-    demo_info = db.relationship('Demo')
-    cert_info = db.relationship('Cert')
-    form_info = db.relationship('Form')
-    clinical_info = db.relationship('Clinical')
+    demo_info = db.relationship('Demographics')
+    cert_info = db.relationship('Certifications')
+    clinical_info = db.relationship('Clinical_edu')
     emp_notes_info = db.relationship('Emp_notes')
+    equipment_it = db.relationship('Equipment_IT')
+    emp_health = db.relationship('Emp_health')
+    hr = db.relationship('Human_resources')
+
+    form_info = db.relationship('Form')
+
 

@@ -17,6 +17,18 @@
             <span><label><b>Employee Health Issued Doctor's Note: </b></label> {{note.issuednote}}</span>
             <span><a href="{{ url_for('views.issuednote_download',upload_id=note.id)}}">Download</a></span>
         </div>
+        <div>
+            <span><label><b>Medical Notes: </b></label> {{note.medical}}</span>
+            <span><a href="{{ url_for('views.medical_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Proof of Death for Bereavement Pay: </b></label> {{note.proofdeath}}</span>
+            <span><a href="{{ url_for('views.proofdeath_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Resignation Letter: </b></label> {{note.resignation}}</span>
+            <span><a href="{{ url_for('views.resignation_download',upload_id=note.id)}}">Download</a></span>
+        </div>
 
 
         <div><label><i>Last Updated: </i></label> {{note.update}}</div>
@@ -58,6 +70,36 @@
             class="form-control"
             id="issuednote"
             name="issuednote"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="medical">Upload Medical Notes</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="medical"
+            name="medical"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="proofdeath">Upload Proof of Death for Bereavement Pay</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="proofdeath"
+            name="proofdeath"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="resignation">Upload Resignation Letter</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="resignation"
+            name="resignation"/>
     </div>
     <br/>
 

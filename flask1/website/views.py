@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template as rt, request, flash, jsonify, send_file
 from flask_login import login_required,current_user
-from .models import Demo, Cert, Form, Clinical, Emp_notes
+from .models import Demographics, Certifications, Form, Clinical_edu, Emp_notes
 from . import db
 import json
 from io import BytesIO
@@ -45,7 +45,7 @@ def demo():
         emergencyphone = request.form.get('emergencyphone')
         emergencyrelation = request.form.get('emergencyrelation')
 
-        full_demo = Demo(
+        full_demo = Demographics(
             fname=fname,
             lname=lname,
             maiden=maiden,
@@ -74,7 +74,7 @@ def demo():
             emergencyrelation=emergencyrelation,
             user_id=current_user.id)
         
-        field = Demo.query.filter(Demo.user_id==current_user.id).first()
+        field = Demographics.query.filter(Demographics.user_id==current_user.id).first()
         if field:
             db.session.delete(field)
             db.session.commit()
@@ -84,7 +84,7 @@ def demo():
 
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql1 = 'SELECT * FROM demo WHERE user_id=' + str(current_user.id)
+    sql1 = 'SELECT * FROM demographics WHERE user_id=' + str(current_user.id)
     c.execute(sql1)
     output = c.fetchall()
     c.close()
@@ -121,7 +121,7 @@ def cert():
         visa = request.form.get('visa')
         misc = request.form.get('misc')
 
-        full_cert = Cert(
+        full_cert = Certifications(
             acls_cert=acls,
             annual_trophon=trophon,
             ardms=ardms,
@@ -145,7 +145,7 @@ def cert():
             misc=misc,
             user_id=current_user.id)
 
-        field = Cert.query.filter(Cert.user_id==current_user.id).first()
+        field = Certifications.query.filter(Certifications.user_id==current_user.id).first()
         if field:
             db.session.delete(field)
             db.session.commit()
@@ -155,7 +155,7 @@ def cert():
     
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql1 = 'SELECT * FROM cert WHERE user_id=' + str(current_user.id)
+    sql1 = 'SELECT * FROM certifications WHERE user_id=' + str(current_user.id)
     c.execute(sql1)
     output = c.fetchall()
     c.close()
@@ -168,7 +168,7 @@ def cert():
     
 @views.route('/clinical-education', methods=['GET','POST'])
 @login_required
-def clinical_ed():
+def clinical_edu():
     if request.method == 'POST':
         rn_na_comp = request.form.get('rn_na_comp')
         rn_na_recert = request.form.get('rn_na_recert')
@@ -177,7 +177,7 @@ def clinical_ed():
         pyxis = request.files['pyxis']
         misc = request.form.get('misc')
 
-        full_clin = Clinical(
+        full_clin = Clinical_edu(
             rn_na_comp=rn_na_comp,
             rn_na_recert=rn_na_recert,
             rn_na_orien=rn_na_orien,
@@ -186,7 +186,7 @@ def clinical_ed():
             misc=misc,
             user_id=current_user.id)
         
-        row = Clinical.query.filter(Clinical.user_id==current_user.id).first()
+        row = Clinical_edu.query.filter(Clinical_edu.user_id==current_user.id).first()
         if row:
             db.session.delete(row)
             db.session.commit()
@@ -195,7 +195,7 @@ def clinical_ed():
         flash('Information saved in database.',category='Success')
     connect = sqlite3.connect('instance/database.db')
     c = connect.cursor()
-    sql = 'SELECT * FROM clinical WHERE user_id=' + str(current_user.id)
+    sql = 'SELECT * FROM clinical_edu WHERE user_id=' + str(current_user.id)
     c.execute(sql)
     output = c.fetchall()
     c.close()
@@ -215,11 +215,17 @@ def emp_notes():
         blood_don = request.files['blood_don']
         cancerscreen = request.files['cancerscreen']
         issuednote = request.files['issuednote']
+        medical = request.files['medical']
+        proofdeath = request.files['proofdeath']
+        resignation = request.files['resignation']
 
         full_notes = Emp_notes(
             blood_don=blood_don.filename,blood_dondata=blood_don.read(),
             cancerscreen=cancerscreen.filename,cancerscreendata=cancerscreen.read(),
             issuednote=issuednote.filename,issuednotedata=issuednote.read(),
+            medical=medical.filename,medicaldata=medical.read(),
+            proofdeath=proofdeath.filename,proofdeathdata=proofdeath.read(),
+            resignation=resignation.filename,resignationdata=resignation.read(),
 
             user_id = current_user.id)
 
@@ -250,11 +256,11 @@ def emp_notes():
 @views.route('/admin', methods=['GET','POST'])
 @login_required
 def admin(): # set admin users here
-    if current_user.email == '':
+    if current_user.email == 'jason@gmail.com':
         flash('Successfully accessed Admin page.',category='Success')
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()
-        sql1 = 'SELECT * FROM demo'
+        sql1 = 'SELECT * FROM demographics'
         c.execute(sql1)
         output = c.fetchall()
         c.close()
@@ -347,12 +353,12 @@ def hybrid_download(upload_id):
 # for Clinical Education
 @views.route('/linen_download/<upload_id>')
 def linen_download(upload_id):
-    upload = Clinical.query.filter_by(id=upload_id).first()
+    upload = Clinical_edu.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.linendata), download_name=upload.linen,as_attachment=True)
 
 @views.route('/pyxis_download/<upload_id>')
 def pyxis_download(upload_id):
-    upload = Clinical.query.filter_by(id=upload_id).first()
+    upload = Clinical_edu.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.pyxisdata), download_name=upload.pyxis,as_attachment=True)
 
 # for Doctor and Employee notes
@@ -371,15 +377,26 @@ def issuednote_download(upload_id):
     upload = Emp_notes.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.issuednotedata), download_name=upload.issuednote,as_attachment=True)
 
+@views.route('/medical_download/<upload_id>')
+def medical_download(upload_id):
+    upload = Emp_notes.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.medicaldata), download_name=upload.medical,as_attachment=True)
 
+@views.route('/proofdeath_download/<upload_id>')
+def proofdeath_download(upload_id):
+    upload = Emp_notes.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.proofdeathdata), download_name=upload.proofdeath,as_attachment=True)
 
-
+@views.route('/proofdeath_download/<upload_id>')
+def resignation_download(upload_id):
+    upload = Emp_notes.query.filter_by(id=upload_id).first()
+    return send_file(BytesIO(upload.resignationdata), download_name=upload.resignation,as_attachment=True)
 
 @views.route('/delete-field', methods=['POST']) 
 def delete_note():
     field = json.loads(request.data)
     profileid = field['profileid']
-    field = Demo.query.get(profileid)
+    field = Demographics.query.get(profileid)
     if field:
         if field.user_id == current_user.id:
             db.session.delete(field)
@@ -390,7 +407,7 @@ def delete_note():
 def delete_note2():
     field = json.loads(request.data)
     profileid = field['profileid']
-    field = Cert.query.get(profileid)
+    field = Certifications.query.get(profileid)
     if field:
         if field.user_id == current_user.id:
             db.session.delete(field)
@@ -401,7 +418,7 @@ def delete_note2():
 def delete_note3():
     field = json.loads(request.data)
     profileid = field['profileid']
-    field = Clinical.query.get(profileid)
+    field = Clinical_edu.query.get(profileid)
     if field:
         if field.user_id == current_user.id:
             db.session.delete(field)
