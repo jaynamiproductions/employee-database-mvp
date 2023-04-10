@@ -105,7 +105,6 @@ class Emp_health(db.Model):
     covid = db.Column(db.String(50))
     n95 = db.Column(db.String(50))
     vaccination = db.Column(db.String(50))
-    vaccinationdata = db.Column(db.LargeBinary)
     misc = db.Column(db.String(50))
     update = db.Column(db.String(50), default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

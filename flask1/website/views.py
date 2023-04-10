@@ -560,35 +560,14 @@ def admin(): # set admin users here
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()
 
-        sql = 'SELECT * FROM demographics'
-        c.execute(sql)
-        demo = c.fetchall()
 
-        sql2 = 'SELECT * FROM certifications'
-        c.execute(sql2)
-        cert = c.fetchall()
-
-        sql3 = 'SELECT * FROM clinical_edu'
-        c.execute(sql3)
-        clin = c.fetchall()
-
-        sql4 = 'SELECT * FROM Emp_notes'
-        c.execute(sql4)
-        notes = c.fetchall()
-
-        sql5 = 'SELECT * FROM user u JOIN demographics d on u.id = d.user_id JOIN certifications c on u.id = c.user_id JOIN Clinical_Edu cl on u.id = cl.user_id JOIN Emp_notes n on u.id=n.user_id'
+        sql5 = 'SELECT * FROM user u JOIN demographics d on u.id = d.user_id JOIN certifications c on u.id = c.user_id JOIN Clinical_Edu cl on u.id = cl.user_id JOIN Emp_notes n on u.id=n.user_id JOIN Equipment_IT it on u.id=it.user_id JOIN Emp_health h on u.id=h.user_id JOIN Human_resources hr on u.id=hr.user_id JOIN Labor_relations lr on u.id=lr.user_id JOIN New_hires nh on u.id=nh.user_id JOIN Payroll p on u.id=p.user_id JOIN Timekeeping t on u.id=t.user_id JOIN Form f on u.id=f.user_id'
         c.execute(sql5)
         total = c.fetchall()
 
         c.close()
         connect.close()
-        return rt('admin2.html',user=current_user,
-                  data=demo,
-                  data2=cert,
-                  data3=clin,
-                  data4=notes,
-                  total=total
-                  )
+        return rt('admin2.html',user=current_user,total=total)
     else:
         flash('Admin page access denied.',category='Error')
         return rt('admin.html',user=current_user)
