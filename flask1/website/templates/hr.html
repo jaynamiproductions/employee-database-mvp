@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}Human Resources{% endblock %}
+{% block content %}
+<h4>Human Resources</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for vari in user.hr %}
+    <li class="list-group-item">
+        <div><label><b>Annual Attestation of Competency: </b></label> {{vari.attestation}}</div>
+        <div><label><b>Annual Department Area Competency: </b></label> {{vari.dept_competency}}</div>
+
+        <div><label><i>Last Updated: </i></label> {{vari.update}}</div>
+        <button type="button" class="close" onClick="deleteHR({{ vari.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="attestation">Annual Attestation of Competency</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="attestation"
+            name="attestation"
+            placeholder="Enter Annual Attestation of Competency"
+            value="{{ data[1] }}"
+            >
+    </div>
+
+    <div class="form-group">
+        <label for="dept">Annual Department Area Competency</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="dept"
+            name="dept"
+            placeholder="Enter Annual Department Area Competency"
+            value="{{ data[2] }}"
+            >
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

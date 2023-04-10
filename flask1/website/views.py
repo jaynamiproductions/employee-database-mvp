@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template as rt, request, flash, jsonify, send_file
 from flask_login import login_required,current_user
-from .models import Demographics, Certifications, Form, Clinical_edu, Emp_notes
+from .models import Demographics, Certifications, Form, Clinical_edu, Emp_notes, Equipment_IT, Emp_health, Human_resources
 from . import db
 import json
 from io import BytesIO
@@ -249,6 +249,120 @@ def emp_notes():
             return rt('emp_notes.html',user=current_user,data=output[0])
     except:
         return rt('emp_notes.html',user=current_user,data=output)
+    
+@views.route('/equipment&it', methods=['GET','POST'])
+@login_required
+def equipmentit():
+    if request.method == 'POST':
+        app_access = request.form.get('app_access')
+        electronics = request.form.get('electronics')
+        vpninfo = request.form.get('vpninfo')
+        misc = request.form.get('misc')
+
+        full_it = Equipment_IT(
+            app_access=app_access,
+            electronics=electronics,
+            vpninfo=vpninfo,
+            misc=misc,
+            user_id = current_user.id)
+        
+        row = Equipment_IT.query.filter(Equipment_IT.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full_it)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM Equipment_IT WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('equipment.html',user=current_user,data=output[0])
+    except:
+        return rt('equipment.html',user=current_user,data=output)
+    
+
+
+@views.route('/employee-health', methods=['GET','POST'])
+@login_required
+def health():
+    if request.method == 'POST':
+        health_assessment = request.form.get('assessment')
+        covid = request.form.get('covid')
+        n95 = request.form.get('n95')
+        vaccine = request.form.get('vaccine')
+        misc = request.form.get('misc')
+
+        full = Emp_health(
+            health_assessment=health_assessment,
+            covid=covid,
+            n95=n95,
+            vaccination=vaccine,
+            misc=misc,
+            user_id = current_user.id)
+        
+        row = Emp_health.query.filter(Emp_health.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM Emp_health WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('emp_health.html',user=current_user,data=output[0])
+    except:
+        return rt('emp_health.html',user=current_user,data=output)
+    
+
+@views.route('/human-resources', methods=['GET','POST'])
+@login_required
+def hr():
+    if request.method == 'POST':
+        attestation = request.form.get('attestation')
+        dept = request.form.get('dept')
+
+
+        full = Human_resources(
+            attestation=attestation,
+            dept=dept,
+  
+            user_id = current_user.id)
+        
+        row = Human_resources.query.filter(Human_resources.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM Human_resources WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('hr.html',user=current_user,data=output[0])
+    except:
+        return rt('hr.html',user=current_user,data=output)
+
+
+
 
 
 
@@ -387,10 +501,12 @@ def proofdeath_download(upload_id):
     upload = Emp_notes.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.proofdeathdata), download_name=upload.proofdeath,as_attachment=True)
 
-@views.route('/proofdeath_download/<upload_id>')
+@views.route('/resignation_download/<upload_id>')
 def resignation_download(upload_id):
     upload = Emp_notes.query.filter_by(id=upload_id).first()
     return send_file(BytesIO(upload.resignationdata), download_name=upload.resignation,as_attachment=True)
+
+
 
 @views.route('/delete-field', methods=['POST']) 
 def delete_note():
@@ -430,6 +546,39 @@ def delete_note4():
     field = json.loads(request.data)
     profileid = field['profileid']
     field = Emp_notes.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/delete-field5', methods=['POST'])
+def delete_note5():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Equipment_IT.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/delete-field6', methods=['POST'])
+def delete_note6():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Emp_health.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/delete-field7', methods=['POST'])
+def delete_note7():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Human_resources.query.get(profileid)
     if field:
         if field.user_id == current_user.id:
             db.session.delete(field)
