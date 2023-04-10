@@ -1,0 +1,95 @@
+{% extends "base.html" %} {% block title %}Clinical Education{% endblock %}
+{% block content %}
+<h4>Employee Clinical Education</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for clin in user.clinical_info %}
+    <li class="list-group-item">
+        <div><label><b>Annual RN &/or NA Competency: </b></label> {{clin.rn_na_comp}}</div>
+        <div><label><b>Annual RN &/or NA Recertification Competency Skills: </b></label> {{clin.rn_na_recert}}</div>
+        <div><label><b>RN &/or NA Orientation Competency: </b></label> {{clin.rn_na_orien}}</div>
+        <div>
+            <span><label><b>Hospital Attire Issuance Linen Forms: </b></label> {{clin.linen}}</span>
+            <span><a href="{{ url_for('views.linen_download',upload_id=clin.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Pyxis Access Forms: </b></label> {{clin.pyxis}}</span>
+            <span><a href="{{ url_for('views.pyxis_download',upload_id=clin.id)}}">Download</a></span>
+        </div>
+        <div><label><b>Miscellaneous: </b></label> {{clin.misc}}</div>
+        <button type="button" class="close" onClick="deleteClinical({{ clin.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Information</h5>
+<br/>
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="rn_na_comp">Annual RN &/or NA Competency</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="rn_na_comp"
+            name="rn_na_comp"
+            placeholder="Enter Annual RN &/or NA Competency"
+            value="{{ data[1] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="rn_na_recert">Annual RN &/or NA Recertification Competency Skills</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="rn_na_recert"
+            name="rn_na_recert"
+            placeholder="Enter Annual RN &/or NA Recertification Competency Skills"
+            value="{{ data[2] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="rn_na_orien">RN &/or NA Orientation Competency</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="rn_na_orien"
+            name="rn_na_orien"
+            placeholder="Enter RN &/or NA Orientation Competency"
+            value="{{ data[3] }}"/>
+    </div>
+    <div class="for-group">
+        <label for="linen">Upload Hospital Attire Issuance Linen Forms</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="linen"
+            name="linen"
+            value="{{ data[5] }}"
+        />
+    </div>
+    <br/>
+    <div class="for-group">
+        <label for="pyxis">Upload Pyxis Access Forms</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="pyxis"
+            name="pyxis"
+            value="{{ data[7] }}"
+        />
+    </div>
+    <br/>
+    <div class="form-group">
+        <label for="misc">Miscellaneous</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="misc"
+            name="misc"
+            placeholder="Enter Miscellaneous"
+            value="{{ data[8] }}"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

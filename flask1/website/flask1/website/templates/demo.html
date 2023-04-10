@@ -1,0 +1,365 @@
+{% extends "base.html" %} {% block title %}Demographics{% endblock %}
+{% block content %}
+<h4>Employee Demographics</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for demo in user.demo_info %}
+    <li class="list-group-item">
+        <div><label><b>First Name: </b></label> {{demo.fname}}</div>
+        <div><label><b>Last Name: </b></label> {{demo.lname}}</div>
+        <div><label><b>Alias/Maiden Name: </b></label> {{demo.maiden}}</div>
+        <div><label><b>SBID# </b></label> {{demo.sbid}}</div>
+        <div><label><b>Position: </b></label> {{demo.position}}</div>
+        <div><label><b>Line#: </b></label> {{demo.linenum}}</div>
+        <div><label><b>Department: </b></label> {{demo.dept}}</div>
+        <div><label><b>Cost Center Name & Number: </b></label> {{demo.ccnn}}</div>
+        <div><label><b>Salary Grade: </b></label> {{demo.salary}}</div>
+        <div><label><b>Current Appointment: </b></label> {{demo.appt}}</div>
+        <div><label><b>State Hire Date: </b></label> {{demo.hiredate}}</div>
+        <div><label><b>Permanent Appointment Date: </b></label> {{demo.apptdate}}</div>
+        <div><label><b>Supervisor: </b></label> {{demo.supervisor}}</div>
+        <div><label><b>SB Email Address: </b></label> {{demo.sbemail}}</div>
+        <div><label><b>Home Address: </b></label> {{demo.home}}</div>
+        <div><label><b>City: </b></label> {{demo.city}}</div>
+        <div><label><b>State: </b></label> {{demo.state}}</div>
+        <div><label><b>Zip Code: </b></label> {{demo.zipcode}}</div>
+        <div><label><b>Home Phone number: </b></label> {{demo.hphone}}</div>
+        <div><label><b>Cell Phone number: </b></label> {{demo.cphone}}</div>
+        <div><label><b>Work Phone number: </b></label> {{demo.wphone}}</div>
+        <div><label><b>Work Extension: </b></label> {{demo.wext}}</div>
+        <div><label><b>Date of Birth: </b></label> {{demo.dob}}</div>
+        <div><label><b>Emergency Contact Name: </b></label> {{demo.emergencyname}}</div>
+        <div><label><b>Emergency Contact Phone: </b></label> {{demo.emergencyphone}}</div>
+        <div><label><b>Emergency Contact Relationship to Employee: </b></label> {{demo.emergencyrelation}}</div>
+        <div><label><i>Last Updated: </i></label> {{demo.update}}</div>
+        <button type="button" class="close" onClick="deleteProfile({{ demo.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="fname">First Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="fname"
+            name="fname"
+            placeholder="Enter first name"
+            value="{{ data[1] }}"
+            >
+    </div>
+
+    <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="lname"
+            name="lname"
+            placeholder="Enter last name"
+            value="{{ data[2] }}">
+
+    </div>
+
+    <div class="form-group">
+        <label for="maiden">Alias or Maiden Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="maiden"
+            name="maiden"
+            placeholder="Enter alias or maiden name"
+            value="{{ data[3] }}">
+    </div>
+
+    <div class="form-group">
+        <label for="sbid">SB ID#</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="sbid"
+            name="sbid"
+            placeholder="Enter SB ID number"
+            value="{{ data[4] }}">
+    </div>
+
+    <div class="form-group">
+        <label for="position">Position</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="position"
+            name="position"
+            placeholder="Enter position title"
+            value="{{ data[5] }}">
+    </div>
+    <div class="form-group">
+        <label for="linenum">Line #</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="linenum"
+            name="linenum"
+            placeholder="Enter line number"
+            value="{{ data[6] }}">
+    </div>
+    <div class="form-group">
+        <label for="dept">Department</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="dept"
+            name="dept"
+            placeholder="Enter department"
+            value="{{ data[7] }}">
+    </div>
+    <div class="form-group">
+        <label for="ccnnn">Cost Center Name & Number</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="ccnnn"
+            name="ccnn"
+            placeholder="Enter Cost Center Name & Number"
+            value="{{ data[8] }}">
+    </div>
+    <div class="form-group">
+        <label for="salary">Salary Grade</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="salary"
+            name="salary"
+            placeholder="Enter Salary Grade"
+            value="{{ data[9] }}">
+    </div>
+    <div class="form-group">
+        <label for="appt">Current Appointment</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="appt"
+            name="appt"
+            placeholder="Enter Current Appointment"
+            value="{{ data[10] }}">
+    </div>
+    <div class="form-group">
+        <label for="hiredate">State Hire Date</label>
+        <input 
+            type="date"
+            class="form-control"
+            id="hiredate"
+            name="hiredate"
+            placeholder="Enter State Hire Date"
+            value="{{ data[11] }}">
+    </div>
+    <div class="form-group">
+        <label for="apptdate">Permanent Appointment Date</label>
+        <input 
+            type="date"
+            class="form-control"
+            id="apptdate"
+            name="apptdate"
+            placeholder="Enter Permanent Appointment Date"
+            value="{{ data[12] }}">
+    </div>
+    <div class="form-group">
+        <label for="supervisor">Supervisor</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="supervisor"
+            name="supervisor"
+            placeholder="Enter Supervisor name"
+            value="{{ data[13] }}">
+    </div>
+    <div class="form-group">
+        <label for="sbemail">SB Email Address</label>
+        <input 
+            type="email"
+            class="form-control"
+            id="sbemail"
+            name="sbemail"
+            placeholder="Enter SB email address"
+            value="{{ data[14] }}">
+    </div>
+    <div class="form-group">
+        <label for="home">Home Address</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="home"
+            name="home"
+            placeholder="Enter home address"
+            value="{{ data[15] }}">
+    </div>
+    <div class="form-group">
+        <label for="city">City</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="city"
+            name="city"
+            placeholder="Enter city"
+            value="{{ data[16] }}">
+    </div>
+    <div class="form-group">
+        <label for="state">State</label>
+        <select            
+            class="form-control"
+            id="state"
+            name="state"
+            >
+            <option value="{{ data[17] }}">Selected State: {{ data[17] }}</option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="DC">District Of Columbia</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="zipcode">Zip Code</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="zipcode"
+            name="zipcode"
+            placeholder="Enter zip code"
+            value="{{ data[18] }}">
+    </div>
+    <div class="form-group">
+        <label for="hphone">Home Phone number:</label>
+        <input 
+            type="number" 
+            class="form-control"
+            id="hphone" 
+            name="hphone" 
+            placeholder="Enter home phone number (e.g. 5551118888)"
+            value="{{ data[19] }}">
+    </div>
+    <div class="form-group">
+        <label for="cphone">Cell Phone number:</label>
+        <input 
+            type="number" 
+            class="form-control"
+            id="cphone" 
+            name="cphone" 
+            placeholder="Enter cell phone number (e.g. 5551118888)"
+            value="{{ data[20] }}">
+    </div>
+    <div class="form-group">
+        <label for="wphone">Work Phone number:</label>
+        <input 
+            type="number" 
+            class="form-control"
+            id="wphone" 
+            name="wphone" 
+            placeholder="Enter work phone number (e.g. 5551118888)"
+            value="{{ data[21] }}">
+    </div>
+    <div class="form-group">
+        <label for="wext">Work Extension:</label>
+        <input 
+            type="text" 
+            class="form-control"
+            id="wext" 
+            name="wext" 
+            placeholder="Enter work extension"
+            value="{{ data[22] }}">
+    </div>
+    <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input 
+            type="date"
+            class="form-control"
+            id="dob"
+            name="dob"
+            placeholder="Enter Date of Birth"
+            value="{{ data[23] }}">
+    </div>
+    <div class="form-group">
+        <label for="emergencyname">Emergency Contact Name</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="emergencyname"
+            name="emergencyname"
+            placeholder="Enter Emergency Contact Name"
+            value="{{ data[24] }}">
+    </div>
+    <div class="form-group">
+        <label for="emergencyphone">Emergency Contact Phone Number</label>
+        <input 
+            type="number"
+            class="form-control"
+            id="emergencyphone"
+            name="emergencyphone"
+            placeholder="Enter Emergency Contact Phone Number"
+            value="{{ data[25] }}">
+    </div>
+    <div class="form-group">
+        <label for="emergencyrelation">Emergency Contact Relationship to Employee</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="emergencyrelation"
+            name="emergencyrelation"
+            placeholder="Enter Relationship to Employee"
+            value="{{ data[26] }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

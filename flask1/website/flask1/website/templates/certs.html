@@ -1,0 +1,273 @@
+{% extends "base.html" %} {% block title %}Certificates{% endblock %}
+{% block content %}
+<h4>Employee Certificates/Degrees/Diplomas/Licenses</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for certi in user.cert_info %}
+    <li class="list-group-item">
+        <div><label><b>ACLS Certification: </b></label> {{certi.acls_cert}}</div>
+        <div><label><b>Annual Trophon Certification: </b></label> {{certi.annual_trophon}}</div>
+        <div><label><b>ARDMS Certification: </b></label> {{certi.ardms}}</div>
+        <div><label><b>ARRT Certification: </b></label> {{certi.arrt}}</div>
+        <div><label><b>BLS Certification: </b></label> {{certi.bls}}</div>
+        <div><label><b>CCI Certification: </b></label> {{certi.cci}}</div>
+        <div><label><b>Education Institution 1: </b></label> {{certi.school1}}</div>
+        <div><label><b>Level of Education 1: </b></label> {{certi.edu1}}</div>
+        <div><label><b>Area of Study 1: </b></label> {{certi.major1}}</div>
+        <div><label><b>Education Institution 2: </b></label> {{certi.school2}}</div>
+        <div><label><b>Level of Education 2: </b></label> {{certi.edu2}}</div>
+        <div><label><b>Area of Study 2: </b></label> {{certi.major2}}</div>
+        <div><label><b>Nursing Assistant Program Certification: </b></label> {{certi.nurse_asst}}</div>
+        <div><label><b>NYS Nursing Assistant License: </b></label> {{certi.nysnurse_asst}}</div>
+        <div><label><b>Registered Nurse Program Certification: </b></label> {{certi.rn}}</div>
+        <div><label><b>NYS Registered Nurse License: </b></label> {{certi.nysrn}}</div>
+        <div><label><b>NYS DOH License: </b></label> {{certi.doh}}</div>
+        <div><label><b>PALS Certification: </b></label> {{certi.pals}}</div>
+        <div><label><b>Radiology Radiographer Program Certification: </b></label> {{certi.radiographer}}</div>
+        <div><label><b>Visa/Work Authorization: </b></label> {{certi.visa}}</div>
+        <div><label><b>Miscellaneous: </b></label> {{certi.misc}}</div>
+        <div><label><i>Last Updated: </i></label> {{certi.update}}</div>
+        <button type="button" class="close" onClick="deleteCert({{ certi.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="acls">ACLS Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="acls"
+            name="acls"
+            placeholder="Enter ACLS Certification"
+            value="{{ data[1] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="trophon">Annual Trophon Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="trophon"
+            name="trophon"
+            placeholder="Enter Annual Trophon Certification"
+            value="{{ data[2] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="ardms">ARDMS Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="ardms"
+            name="ardms"
+            placeholder="Enter ARDMS Certification"
+            value="{{ data[3] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="arrt">ARRT Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="arrt"
+            name="arrt"
+            placeholder="Enter ARRT Certification"
+            value="{{ data[4] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="bls">BLS Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="bls"
+            name="bls"
+            placeholder="Enter BLS Certification"
+            value="{{ data[5] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="cci">CCI Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="cci"
+            name="cci"
+            placeholder="Enter CCI Certification"
+            value="{{ data[6] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="school1">Education Institution 1</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="school1"
+            name="school1"
+            placeholder="Enter Education Institution Name 1"
+            value="{{ data[7] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="edu1">Level of Education 1</label>
+        <select            
+            class="form-control"
+            id="edu1"
+            name="edu1"
+            >
+            <option value="{{ data[8] }}">Selected Option: {{ data[8] }}</option>
+            <option value="None">None</option>
+            <option value="High School Diploma">High School Diploma</option>
+            <option value="Some College">Some College</option>
+            <option value="Trade/Vocational School">Trade/Vocational School</option>
+            <option value="Associate's Degree">Associate's Degree</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Master's Degree">Master's Degree</option>
+            <option value="Doctorate Degree">Doctorate's Degree</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="major1">Area of Study 1</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="major1"
+            name="major1"
+            placeholder="Enter Area of Study 1"
+            value="{{ data[9] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="school2">Education Institution 2</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="school2"
+            name="school2"
+            placeholder="Enter Education Institution Name 2"
+            value="{{ data[10] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="edu2">Level of Education 2</label>
+        <select            
+            class="form-control"
+            id="edu2"
+            name="edu2"
+            >
+            <option value="{{ data[11] }}">Selected Option: {{ data[11] }}</option>
+            <option value="None">None</option>
+            <option value="High School Diploma">High School Diploma</option>
+            <option value="Some College">Some College</option>
+            <option value="Trade/Vocational School">Trade/Vocational School</option>
+            <option value="Associate's Degree">Associate's Degree</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Master's Degree">Master's Degree</option>
+            <option value="Doctorate Degree">Doctorate's Degree</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="major2">Area of Study 2</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="major2"
+            name="major2"
+            placeholder="Enter Area of Study 2"
+            value="{{ data[12] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="nurse_asst">Nursing Assistant Program Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="nurse_asst"
+            name="nurse_asst"
+            placeholder="Enter Nursing Assistant Program Certification"
+            value="{{ data[13] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="nysnurse_asst">NYS Nursing Assistant License</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="nysnurse_asst"
+            name="nysnurse_asst"
+            placeholder="Enter NYS Nursing Assistant License"
+            value="{{ data[14] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="rn">Registered Nurse Program Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="rn"
+            name="rn"
+            placeholder="Enter Registered Nurse Program Certification"
+            value="{{ data[15] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="nysrn">NYS Registered Nurse License</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="nysrn"
+            name="nysrn"
+            placeholder="Enter NYS Registered Nurse License"
+            value="{{ data[16] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="doh">NYS DOH License</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="doh"
+            name="doh"
+            placeholder="Enter NYS DOH License"
+            value="{{ data[17] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="pals">PALS Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="pals"
+            name="pals"
+            placeholder="Enter PALS Certification"
+            value="{{ data[18] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="radiographer">Radiology Radiographer Program Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="radiographer"
+            name="radiographer"
+            placeholder="Enter Radiology Radiographer Program Certification"
+            value="{{ data[19] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="visa">Visa/Work Authorization</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="visa"
+            name="visa"
+            placeholder="Enter Visa/Work Authorization"
+            value="{{ data[20] }}"/>
+    </div>
+    <div class="form-group">
+        <label for="misc">Miscellaneous</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="misc"
+            name="misc"
+            placeholder="Enter Miscellaneous"
+            value="{{ data[21] }}"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

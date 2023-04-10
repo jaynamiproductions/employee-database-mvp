@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% block content %}
+<br/>
+
+<h4>Welcome! Please select an option below.</h4>
+<p><i>Logged in: {{user.email}} </i></p>
+<br/>
+<p><a class="link" id="demographics" href="/demographics">Demographics</a></p>
+<p><a class="link" id="certificates" href="/certificates">Certificates</a></p>
+<p><a class="link" id="clinicaleducation" href="/clinical-education">Clinical Education</a></p>
+<p><a class="link" id="employeenotes" href="/employee-notes">Employee Notes</a></p>
+<p><a class="link" id="equipment&it" href="/equipment&it">Electronic Equipment & IT</a></p>
+<p><a class="link" id="employeehealth" href="/employee-health">Employee Health</a></p>
+<p><a class="=link" id="humanresources" href="/human-resources">Human Resources</a></p>
+<p><a class="link" id="laborrelations" href="/labor-relations">Labor Relations</a></p>
+<p><a class="link" id="newhires" href="/new-hires">New Hires</a></p>
+<p><a class="link" id="payroll" href="/payroll">Payroll</a></p>
+<p><a class="link" id="timekeeping" href="/timekeeping">Timekeeping</a></p>
+<p><a class="link" id="forms" href="/forms">Employee Forms</a></p>
+<p><a class="link" id="admin" href="/admin">Admin Page</a></p>
+
+{% endblock %}

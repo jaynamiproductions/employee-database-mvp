@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}Admin{% endblock %}
+{% block content %}
+<br/>
+<h4>Welcome to the Admin page.</h4>
+<p>Database tables can be viewed here. Tables should also be able to be exported as excel files.</p>
+<br/>
+
+{% for i in data %}
+    <p>{{i[1]}} | {{i[2]}} | {{i[3]}}</p>
+{% endfor %}
+
+{% endblock %}

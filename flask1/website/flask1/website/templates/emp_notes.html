@@ -1,0 +1,110 @@
+{% extends "base.html" %} {% block title %}Employee Notes{% endblock %}
+{% block content %}
+<h4>Doctor Notes &/or Employee Letters</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for note in user.emp_notes_info %}
+    <li class="list-group-item">
+        <div>
+            <span><label><b>Blood Donation Note: </b></label> {{note.blood_don}}</span>
+            <span><a href="{{ url_for('views.blood_don_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Cancer Screening Note: </b></label> {{note.cancerscreen}}</span>
+            <span><a href="{{ url_for('views.cancerscreen_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Employee Health Issued Doctor's Note: </b></label> {{note.issuednote}}</span>
+            <span><a href="{{ url_for('views.issuednote_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Medical Notes: </b></label> {{note.medical}}</span>
+            <span><a href="{{ url_for('views.medical_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Proof of Death for Bereavement Pay: </b></label> {{note.proofdeath}}</span>
+            <span><a href="{{ url_for('views.proofdeath_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+        <div>
+            <span><label><b>Resignation Letter: </b></label> {{note.resignation}}</span>
+            <span><a href="{{ url_for('views.resignation_download',upload_id=note.id)}}">Download</a></span>
+        </div>
+
+
+        <div><label><i>Last Updated: </i></label> {{note.update}}</div>
+        <button type="button" class="close" onClick="deleteEmp_notes({{ note.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+
+<h5>Enter Information</h5>
+<br/>
+<form method="POST" enctype="multipart/form-data">
+    <div class="for-group">
+        <label for="blood_don">Upload Blood Donation Note</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="blood_don"
+            name="blood_don"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="cancerscreen">Upload Cancer Screening Form</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="cancerscreen"
+            name="cancerscreen"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="issuednote">Upload Employee Health Issued Doctor's Note</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="issuednote"
+            name="issuednote"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="medical">Upload Medical Notes</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="medical"
+            name="medical"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="proofdeath">Upload Proof of Death for Bereavement Pay</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="proofdeath"
+            name="proofdeath"/>
+    </div>
+    <br/>
+
+    <div class="for-group">
+        <label for="resignation">Upload Resignation Letter</label>
+        <input 
+            type="file"
+            class="form-control"
+            id="resignation"
+            name="resignation"/>
+    </div>
+    <br/>
+
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}
