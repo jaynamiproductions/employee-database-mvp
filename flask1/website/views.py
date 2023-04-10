@@ -337,7 +337,7 @@ def hr():
 
         full = Human_resources(
             attestation=attestation,
-            dept=dept,
+            dept_competency=dept,
   
             user_id = current_user.id)
         
