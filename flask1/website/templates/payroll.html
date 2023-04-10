@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% block title %}Payroll{% endblock %}
+{% block content %}
+<h4>Employee Payroll</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for pay in user.payroll_info %}
+    <li class="list-group-item">
+        <div><label><b>Hospital Change Form: </b></label> {{pay.hospitalchange}}</div>
+        <div><label><b>Permanent &/or Temporary Salary Increase: </b></label> {{pay.salary}}</div>
+        <div><label><b>Miscellaneous: </b></label> {{pay.misc}}</div>
+
+
+        <div><label><i>Last Updated: </i></label> {{pay.update}}</div>
+        <button type="button" class="close" onClick="deletePayroll({{ pay.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="change">Hospital Change Form</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="change"
+            name="change"
+            placeholder="Enter Hospital Change Form"
+            value="{{ data[1] }}"/>
+    </div>
+    
+    <div class="form-group">
+        <label for="salary">Permanent &/or Temporary Salary Increase</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="salary"
+            name="salary"
+            placeholder="Enter Permanent &/or Temporary Salary Increase"
+            value="{{ data[2] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="misc">Miscellaneous</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="misc"
+            name="misc"
+            placeholder="Enter Miscellaneous"
+            value="{{ data[3] }}"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

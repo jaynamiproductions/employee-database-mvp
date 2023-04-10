@@ -7,6 +7,21 @@
     <li class="list-group-item">
         <div><label><b>Annual Attestation of Competency: </b></label> {{vari.attestation}}</div>
         <div><label><b>Annual Department Area Competency: </b></label> {{vari.dept_competency}}</div>
+        <div><label><b>Annual IV Contrast Injection Competency: </b></label> {{vari.ivcontrast}}</div>
+        <div><label><b>Annual LMS Proof of Completion: </b></label> {{vari.lmsproof}}</div>
+        <div><label><b>Annual Performance Evaluation: </b></label> {{vari.performance_eval}}</div>
+        <div><label><b>Annual Performance Program: </b></label> {{vari.performance_program}}</div>
+        <div><label><b>Annual Trophon Competency: </b></label> {{vari.trophon}}</div>
+        <div><label><b>Awards or Recognition: </b></label> {{vari.awards}}</div>
+        <div><label><b>Department Orientation & EOC Checklist: </b></label> {{vari.orientation}}</div>
+        <div><label><b>Employee Leave Letters: </b></label> {{vari.leave_letter}}</div>
+        <div><label><b>Employee HR Notice of Expiring License &/or Certification: </b></label> {{vari.expiration_notice}}</div>
+        <div><label><b>Employee Position Description: </b></label> {{vari.description}}</div>
+        <div><label><b>Hospital Material & Equipment Checklist: </b></label> {{vari.hospital_checklist}}</div>
+        <div><label><b>Medical Charting Number Request Form: </b></label> {{vari.chartingnumber_request}}</div>
+        <div><label><b>Permanent Appointment Packet: </b></label> {{vari.appt_packet}}</div>
+        <div><label><b>Status Change: </b></label> {{vari.status}}</div>
+        <div><label><b>Miscellaneous: </b></label> {{vari.misc}}</div>
 
         <div><label><i>Last Updated: </i></label> {{vari.update}}</div>
         <button type="button" class="close" onClick="deleteHR({{ vari.id }})">Clear Data
@@ -40,6 +55,172 @@
             placeholder="Enter Annual Department Area Competency"
             value="{{ data[2] }}"/>
     </div>
+
+    <div class="form-group">
+        <label for="ivcontrast">Annual IV Contrast Injection Competency</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="ivcontrast"
+            name="ivcontrast"
+            placeholder="Enter Annual IV Contrast Injection Competency"
+            value="{{ data[3] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="lmsproof">Annual LMS Proof of Completion</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="lmsproof"
+            name="lmsproof"
+            placeholder="Enter Annual LMS Proof of Completion"
+            value="{{ data[4] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="eval">Annual Performance Evaluation</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="eval"
+            name="eval"
+            placeholder="Enter Annual Performance Evaluation"
+            value="{{ data[5] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="program">Annual Performance Program</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="program"
+            name="program"
+            placeholder="Enter Annual Performance Program"
+            value="{{ data[6] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="trophon">Annual Trophon Competency</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="trophon"
+            name="trophon"
+            placeholder="Enter Annual Trophon Competency"
+            value="{{ data[7] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="awards">Awards or Recognition</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="awards"
+            name="awards"
+            placeholder="Enter Awards or Recognition "
+            value="{{ data[8] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="orientation">Department Orientation & EOC Checklist</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="orientation"
+            name="orientation"
+            placeholder="Enter Department Orientation & EOC Checklist"
+            value="{{ data[9] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="leave">Employee Leave Letters</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="leave"
+            name="leave"
+            placeholder="Enter Employee Leave Letters"
+            value="{{ data[10] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="expire">Employee HR Notice of Expiring License &/or Certification</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="expire"
+            name="expire"
+            placeholder="Enter Employee HR Notice of Expiring License &/or Certification"
+            value="{{ data[11] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="desc">Employee Position Description</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="desc"
+            name="desc"
+            placeholder="Enter Employee Position Description"
+            value="{{ data[12] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="checklist">Hospital Material & Equipment Checklist</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="checklist"
+            name="checklist"
+            placeholder="Enter Hospital Material & Equipment Checklist"
+            value="{{ data[13] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="charting">Medical Charting Number Request Form</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="charting"
+            name="charting"
+            placeholder="Enter Medical Charting Number Request Form"
+            value="{{ data[14] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="appt">Permanent Appointment Packet</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="appt"
+            name="appt"
+            placeholder="Enter Permanent Appointment Packet"
+            value="{{ data[15] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="status">Status Change</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="status"
+            name="status"
+            placeholder="Enter Status Change"
+            value="{{ data[16] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="misc">Miscellaneous</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="misc"
+            name="misc"
+            placeholder="Enter Miscellaneous"
+            value="{{ data[17] }}"/>
+    </div>
+
 
 
     <button type="submit" class="btn btn-primary">Submit</button>

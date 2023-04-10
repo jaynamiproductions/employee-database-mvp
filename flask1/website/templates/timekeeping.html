@@ -1,0 +1,125 @@
+{% extends "base.html" %} {% block title %}Timekeeping{% endblock %}
+{% block content %}
+<h4>Employee Timekeeping</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for time in user.timekeeping_info %}
+    <li class="list-group-item">
+        <div><label><b>Accrual Summary: </b></label> {{time.accrual}}</div>
+        <div><label><b>Disability: </b></label> {{time.disability}}</div>
+        <div><label><b>Employee Injury &/or Illness Report: </b></label> {{time.injury}}</div>
+        <div><label><b>Kronos Access Request: </b></label> {{time.kronos}}</div>
+        <div><label><b>Over Time / Re-Call Forms: </b></label> {{time.overtime}}</div>
+        <div><label><b>SBMC Agency Timesheets: </b></label> {{time.sbmc_agency}}</div>
+        <div><label><b>Workers Compensation: </b></label> {{time.wc}}</div>
+        <div><label><b>Miscellaneous: </b></label> {{time.misc}}</div>
+        <div><label><i>Last Updated: </i></label> {{time.update}}</div>
+        <button type="button" class="close" onClick="deleteTime({{ time.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="accrual">Accrual Summary</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="accrual"
+            name="accrual"
+            placeholder="Enter Accrual Summary"
+            value="{{ data[1] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="disability">Disability</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="disability"
+            name="disability"
+            placeholder="Enter Disability"
+            value="{{ data[2] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="injury">Employee Injury &/or Illness Report</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="injury"
+            name="injury"
+            placeholder="Enter Employee Injury &/or Illness Report"
+            value="{{ data[3] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="kronos">Kronos Access Request</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="kronos"
+            name="kronos"
+            placeholder="Enter Kronos Access Request"
+            value="{{ data[4] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="overtime">Over Time / Re-Call Forms</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="overtime"
+            name="overtime"
+            placeholder="Enter Over Time / Re-Call Forms"
+            value="{{ data[5] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="sbmc">SBMC Agency Timesheets</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="sbmc"
+            name="sbmc"
+            placeholder="Enter SBMC Agency Timesheets"
+            value="{{ data[6] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="wc">Workers Compensation</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="wc"
+            name="wc"
+            placeholder="Enter Workers Compensation"
+            value="{{ data[7] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="misc">Miscellaneous</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="misc"
+            name="misc"
+            placeholder="Enter Miscellaneous"
+            value="{{ data[8] }}"/>
+    </div>
+    
+    
+    
+    
+    
+    
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

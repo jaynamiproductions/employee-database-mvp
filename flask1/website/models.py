@@ -169,7 +169,7 @@ class Timekeeping(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     accrual = db.Column(db.String(50))
     disability = db.Column(db.String(50))
-    injurt = db.Column(db.String(50))
+    injury = db.Column(db.String(50))
     kronos = db.Column(db.String(50))
     overtime = db.Column(db.String(50))
     sbmc_agency = db.Column(db.String(50))

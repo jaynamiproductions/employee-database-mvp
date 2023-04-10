@@ -1,0 +1,114 @@
+{% extends "base.html" %} {% block title %}Labor Relations{% endblock %}
+{% block content %}
+<h4>Labor Relations</h4>
+<br/>
+<ol class="list-group list-group-flush" id="profile_info">
+    {% for labor in user.lr %}
+    <li class="list-group-item">
+        <div><label><b>Employee Counseling Memorandum: </b></label> {{labor.memorandum}}</div>
+        <div><label><b>Employee Notice of Termination: </b></label> {{labor.termination}}</div>
+        <div><label><b>Employee Request for Discipline: </b></label> {{labor.disciplinerequest}}</div>
+        <div><label><b>Notice of Discipline (NOD's): </b></label> {{labor.disciplinenotice}}</div>
+        <div><label><b>Non-Renewal Notice: </b></label> {{labor.nonrenewal}}</div>
+        <div><label><b>Re-Appointment Notice: </b></label> {{labor.re_appt}}</div>
+        <div><label><b>Miscellaneous: </b></label> {{labor.misc}}</div>
+
+
+        <div><label><i>Last Updated: </i></label> {{labor.update}}</div>
+        <button type="button" class="close" onClick="deleteLabor({{ labor.id }})">Clear Data
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ol>
+<br/>
+<h5>Enter Information</h5>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="memorandum">Employee Counseling Memorandum</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="memorandum"
+            name="memorandum"
+            placeholder="Enter Employee Counseling Memorandum"
+            value="{{ data[1] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="term">Employee Notice of Termination</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="term"
+            name="term"
+            placeholder="Enter Employee Notice of Termination"
+            value="{{ data[2] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="drequest">Employee Request for Discipline</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="drequest"
+            name="drequest"
+            placeholder="Enter Employee Request for Discipline"
+            value="{{ data[3] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="dnotice">Notice of Discipline (NOD's)</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="dnotice"
+            name="dnotice"
+            placeholder="Enter Notice of Discipline (NOD's)"
+            value="{{ data[4] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="nonrenewal">Non-Renewal Notice</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="nonrenewal"
+            name="nonrenewal"
+            placeholder="Enter Non-Renewal Notice"
+            value="{{ data[5] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="re_appt">Re-Appointment Notice</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="re_appt"
+            name="re_appt"
+            placeholder="Enter Re-Appointment Notice"
+            value="{{ data[6] }}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="misc">Miscellaneous</label>
+        <input 
+            type="text"
+            class="form-control"
+            id="misc"
+            name="misc"
+            placeholder="Enter Miscellaneous"
+            value="{{ data[7] }}"/>
+    </div>
+
+
+
+
+
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br/>
+{% endblock %}

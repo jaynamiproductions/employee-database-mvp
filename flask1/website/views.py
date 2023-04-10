@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template as rt, request, flash, jsonify, send_file
 from flask_login import login_required,current_user
-from .models import Demographics, Certifications, Form, Clinical_edu, Emp_notes, Equipment_IT, Emp_health, Human_resources
+from .models import Demographics, Certifications, Form, Clinical_edu, Emp_notes, Equipment_IT, Emp_health, Human_resources, Labor_relations, New_hires, Payroll, Timekeeping
 from . import db
 import json
 from io import BytesIO
@@ -333,12 +333,40 @@ def hr():
     if request.method == 'POST':
         attestation = request.form.get('attestation')
         dept = request.form.get('dept')
-
+        ivcontrast = request.form.get('ivcontrast')
+        lmsproof = request.form.get('lmsproof')
+        eval = request.form.get('eval')
+        program = request.form.get('program')
+        trophon = request.form.get('trophon')
+        awards = request.form.get('awards')
+        orientation = request.form.get('orientation')
+        leave = request.form.get('leave')
+        expire = request.form.get('expire')
+        desc = request.form.get('desc')
+        checklist = request.form.get('checklist')
+        charting = request.form.get('charting')
+        appt = request.form.get('appt')
+        status = request.form.get('status')
+        misc = request.form.get('misc')
 
         full = Human_resources(
             attestation=attestation,
             dept_competency=dept,
-  
+            ivcontrast=ivcontrast,
+            lmsproof=lmsproof,
+            performance_eval=eval,
+            performance_program=program,
+            trophon=trophon,
+            awards=awards,
+            orientation=orientation,
+            leave_letter=leave,
+            expiration_notice=expire,
+            description=desc,
+            hospital_checklist=checklist,
+            chartingnumber_request=charting,
+            appt_packet=appt,
+            status=status,
+            misc=misc,
             user_id = current_user.id)
         
         row = Human_resources.query.filter(Human_resources.user_id==current_user.id).first()
@@ -360,6 +388,182 @@ def hr():
             return rt('hr.html',user=current_user,data=output[0])
     except:
         return rt('hr.html',user=current_user,data=output)
+    
+
+
+
+
+@views.route('/labor-relations', methods=['GET','POST'])
+@login_required
+def lr():
+    if request.method == 'POST':
+        memorandum = request.form.get('memorandum')
+        term = request.form.get('term')
+        drequest = request.form.get('drequest')
+        dnotice = request.form.get('dnotice')
+        nonrenewal = request.form.get('nonrenewal')
+        re_appt = request.form.get('re_appt')
+        misc = request.form.get('misc')
+
+        full = Labor_relations(
+            memorandum=memorandum,
+            termination=term,
+            disciplinerequest=drequest,
+            disciplinenotice=dnotice,
+            nonrenewal=nonrenewal,
+            re_appt=re_appt,
+            misc=misc,
+            user_id = current_user.id)
+        
+        row = Labor_relations.query.filter(Labor_relations.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM Labor_relations WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('labor.html',user=current_user,data=output[0])
+    except:
+        return rt('labor.html',user=current_user,data=output)
+    
+
+
+@views.route('/new-hires', methods=['GET','POST'])
+@login_required
+def newhires():
+    if request.method == 'POST':
+        resume = request.form.get('resume')
+        offer = request.form.get('offer')
+        acceptance = request.form.get('acceptance')
+        reference = request.form.get('reference')
+        internal = request.form.get('internal')
+        interview = request.form.get('interview')
+        requisition = request.form.get('requisition')
+        misc = request.form.get('misc')
+
+        full = New_hires(
+            resume=resume,
+            offer=offer,
+            acceptance=acceptance,
+            reference=reference,
+            internal=internal,
+            interview=interview,
+            requisition=requisition,
+            misc=misc,
+            user_id = current_user.id)
+        
+        row = New_hires.query.filter(New_hires.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM New_hires WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('newhires.html',user=current_user,data=output[0])
+    except:
+        return rt('newhires.html',user=current_user,data=output)
+    
+
+@views.route('/payroll', methods=['GET','POST'])
+@login_required
+def payroll():
+    if request.method == 'POST':
+        change = request.form.get('change')
+        salary = request.form.get('salary')
+        misc = request.form.get('misc')
+
+        full = Payroll(
+            hospitalchange=change,
+            salary=salary,
+            misc=misc,
+
+            user_id = current_user.id)
+        
+        row = Payroll.query.filter(Payroll.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM Payroll WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('payroll.html',user=current_user,data=output[0])
+    except:
+        return rt('payroll.html',user=current_user,data=output)
+    
+
+
+
+@views.route('/timekeeping', methods=['GET','POST'])
+@login_required
+def time():
+    if request.method == 'POST':
+        accrual = request.form.get('accrual')
+        disability = request.form.get('disability')
+        injury = request.form.get('injury')
+        kronos = request.form.get('kronos')
+        overtime = request.form.get('overtime')
+        sbmc = request.form.get('sbmc')
+        wc = request.form.get('wc')
+        misc = request.form.get('misc')
+
+        full = Timekeeping(
+            accrual=accrual,
+            disability=disability,
+            injury=injury,
+            kronos=kronos,
+            overtime=overtime,
+            sbmc_agency=sbmc,
+            wc=wc,
+            misc=misc,
+            user_id = current_user.id)
+        
+        row = Timekeeping.query.filter(Timekeeping.user_id==current_user.id).first()
+        if row:
+            db.session.delete(row)
+            db.session.commit()
+        db.session.add(full)
+        db.session.commit()
+        flash('Information saved in database.',category='Success')
+    connect = sqlite3.connect('instance/database.db')
+    c = connect.cursor()
+    sql = 'SELECT * FROM Timekeeping WHERE user_id=' + str(current_user.id)
+    c.execute(sql)
+    output = c.fetchall()
+    c.close()
+    connect.close()
+    try:
+        if output[0]:
+            return rt('timekeeping.html',user=current_user,data=output[0])
+    except:
+        return rt('timekeeping.html',user=current_user,data=output)
+
 
 
 
@@ -579,6 +783,51 @@ def delete_note7():
     field = json.loads(request.data)
     profileid = field['profileid']
     field = Human_resources.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/delete-field8', methods=['POST'])
+def delete_note8():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Labor_relations.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/delete-field9', methods=['POST'])
+def delete_note9():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = New_hires.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/delete-field10', methods=['POST'])
+def delete_note10():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Payroll.query.get(profileid)
+    if field:
+        if field.user_id == current_user.id:
+            db.session.delete(field)
+            db.session.commit()
+    return jsonify({})
+
+
+@views.route('/delete-field11', methods=['POST'])
+def delete_note11():
+    field = json.loads(request.data)
+    profileid = field['profileid']
+    field = Timekeeping.query.get(profileid)
     if field:
         if field.user_id == current_user.id:
             db.session.delete(field)
