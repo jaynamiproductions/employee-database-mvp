@@ -207,7 +207,6 @@ def clinical_edu():
         return rt('clinical.html',user=current_user,data=output)
     
 
-
 @views.route('/employee-notes', methods=['GET','POST'])
 @login_required
 def emp_notes():
@@ -286,7 +285,6 @@ def equipmentit():
     except:
         return rt('equipment.html',user=current_user,data=output)
     
-
 
 @views.route('/employee-health', methods=['GET','POST'])
 @login_required
@@ -389,10 +387,6 @@ def hr():
     except:
         return rt('hr.html',user=current_user,data=output)
     
-
-
-
-
 @views.route('/labor-relations', methods=['GET','POST'])
 @login_required
 def lr():
@@ -434,8 +428,6 @@ def lr():
             return rt('labor.html',user=current_user,data=output[0])
     except:
         return rt('labor.html',user=current_user,data=output)
-    
-
 
 @views.route('/new-hires', methods=['GET','POST'])
 @login_required
@@ -481,7 +473,6 @@ def newhires():
     except:
         return rt('newhires.html',user=current_user,data=output)
     
-
 @views.route('/payroll', methods=['GET','POST'])
 @login_required
 def payroll():
@@ -517,9 +508,6 @@ def payroll():
     except:
         return rt('payroll.html',user=current_user,data=output)
     
-
-
-
 @views.route('/timekeeping', methods=['GET','POST'])
 @login_required
 def time():
@@ -564,30 +552,48 @@ def time():
     except:
         return rt('timekeeping.html',user=current_user,data=output)
 
-
-
-
-
-
-
-
 @views.route('/admin', methods=['GET','POST'])
 @login_required
 def admin(): # set admin users here
-    if current_user.email == 'jason@gmail.com':
+    if current_user.email == 'test@email.com':
         flash('Successfully accessed Admin page.',category='Success')
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()
-        sql1 = 'SELECT * FROM demographics'
-        c.execute(sql1)
-        output = c.fetchall()
+
+        sql = 'SELECT * FROM demographics'
+        c.execute(sql)
+        demo = c.fetchall()
+
+        sql2 = 'SELECT * FROM certifications'
+        c.execute(sql2)
+        cert = c.fetchall()
+
+        sql3 = 'SELECT * FROM clinical_edu'
+        c.execute(sql3)
+        clin = c.fetchall()
+
+        sql4 = 'SELECT * FROM Emp_notes'
+        c.execute(sql4)
+        notes = c.fetchall()
+
+        sql5 = 'SELECT * FROM user u JOIN demographics d on u.id = d.user_id JOIN certifications c on u.id = c.user_id JOIN Clinical_Edu cl on u.id = cl.user_id JOIN Emp_notes n on u.id=n.user_id'
+        c.execute(sql5)
+        total = c.fetchall()
+
         c.close()
         connect.close()
-        return rt('admin2.html',user=current_user,data=output)
+        return rt('admin2.html',user=current_user,
+                  data=demo,
+                  data2=cert,
+                  data3=clin,
+                  data4=notes,
+                  total=total
+                  )
     else:
         flash('Admin page access denied.',category='Error')
         return rt('admin.html',user=current_user)
-    
+
+
 
 @views.route('/forms',methods=['GET','POST'])
 @login_required
