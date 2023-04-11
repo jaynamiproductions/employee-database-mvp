@@ -1,35 +1,30 @@
 {% extends "base.html" %} {% block title %}Admin{% endblock %}
 {% block content %}
 <br/>
-<h4>Welcome to the Admin page.</h4>
-<p><i>Missing employee? Ensure all of their forms are submitted, whether it's filled out or blank.</i></p>
+<h3 align="center">Welcome to the Admin page.</h3>
 <br/>
 
-<!-- <b>Demographics:</b>
-{% for i in data %}
-    <p>{{i}}</p>
-{% endfor %}
+<h4>Comprehensive Employee List</h4>
+<br/>
 
-<b>Certificates:</b>
-{% for i in data2 %}
-    <p>{{i}}</p>
-{% endfor %}
-
-<b>Clinical Education:</b>
-{% for i in data3 %}
-    <p>{{i}}</p>
-{% endfor %}
-
-<b>Employee Notes:</b>
-{% for i in data4 %}
-    <p>{{i}}</p>
-{% endfor %} -->
-
-<b>Employees:</b>
 {% for i in total %}
-    <p>{{i}}</p>
+    <p><b>Employee Email: </b>{{i[1]}}</p>
+    <p><b>Employee Name: </b>{{i[4]}} {{i[5]}}</p>
+    <p><b>Demographics: </b>{{i[6:30]}}</p>
+    <p><b>Certificates: </b>{{i[33:54]}}</p>
+    <p><b>Clinical Education: </b>{{i[57:65]}}</p>
+    <p><b>Employee Notes: </b>{{i[68:79]}}</p>
+    <p><b>Electronic Equipment & IT: </b>{{i[84:88]}}</p>
+    <p><b>Employee Health: </b>{{i[91:96]}} </p>
+    <p><b>Human Resources </b>{{i[99:116]}}</p>
+    <p><b>Labor Relations: </b>{{i[119:126]}}</p>
+    <p><b>New Hires: </b>{{i[129:137]}}</p>
+    <p><b>Payroll: </b>{{i[140:143]}}</p>
+    <p><b>Timekeeping: </b>{{i[146:154]}}</p>
+    <p><b>Forms: </b>{{i[157:170]}}</p>
+    <hr>
 {% endfor %}
 
-
+<p><i>Missing employee? Ensure all of their forms are submitted, regardless if it's filled out or blank.</i></p>
 
 {% endblock %}
