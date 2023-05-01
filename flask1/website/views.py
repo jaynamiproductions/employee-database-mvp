@@ -555,7 +555,7 @@ def time():
 @views.route('/admin', methods=['GET','POST'])
 @login_required
 def admin(): # set admin users here
-    if current_user.email == 'test@email.com':
+    if current_user.email == 'test@email.com' or current_user.email == 'tonycato@stonybrook.edu':
         flash('Successfully accessed Admin page.',category='Success')
         connect = sqlite3.connect('instance/database.db')
         c = connect.cursor()
